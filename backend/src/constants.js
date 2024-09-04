@@ -1,3 +1,3 @@
-const DB_NAME = "Hackify League"
+const DB_NAME = "HackifyLeague"
 
 export {DB_NAME};
