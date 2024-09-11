@@ -235,19 +235,6 @@ const forgotPasswordMail = asyncHandler(async (req, res) => {
 
 		await transporter.sendMail(mailOptions);
 
-	return res
-	.status(200)
-	.json(
-		new ApiResponse(
-			200,
-			user,
-			"Updated fullname Successfully"
-		)
-	)
-
-
-})
-
         return res
         .status(200)
         .json(
@@ -296,6 +283,5 @@ export {
     registerUser,
     loginUser,
     refreshAccessToken,
-    logoutUser,
-
+    logoutUser
 }
