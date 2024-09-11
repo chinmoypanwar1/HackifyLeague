@@ -283,5 +283,7 @@ export {
     registerUser,
     loginUser,
     refreshAccessToken,
-    logoutUser
+    logoutUser,
+	forgotPasswordMail,
+	resetPassword
 }
