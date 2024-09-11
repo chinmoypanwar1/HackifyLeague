@@ -1,18 +1,19 @@
 import { Router } from "express";
-import { loginUser, logoutUser, refreshAccessToken, registerUser } from "../controller/user.controller";
-import { verifyJWT } from "../middlewares/auth.middleware";
+import { changeFullName, changeCurrentPassword, forgotPasswordMail, getUser, loginUser, logoutUser, refreshAccessToken, registerUser, resetPassword } from "../controller/user.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
 
-<<<<<<< HEAD
 // secured Routes
 router.route("/logout").post(verifyJWT, logoutUser)
-router.route("/refresh-token").pose(refreshAccessToken)
-=======
-// This is just a comment
->>>>>>> 08a62f1f74ef7cb1122e91c58401eb313799e317
+router.route("/refresh-token").post(refreshAccessToken)
+// router.route("/forgotPassword").post(forgotPasswordMail)
+// router.route("/resetPassword/:resetToken").patch(resetPassword)
+router.route("/getUser").get(verifyJWT, getUser)
+router.route("/changeCurrentPassword").patch(verifyJWT, changeCurrentPassword)
+router.route("/changeFullName").patch(verifyJWT, changeFullName)
 
 export default router;
