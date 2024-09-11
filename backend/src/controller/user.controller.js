@@ -64,15 +64,6 @@ const registerUser = asyncHandler( async(req, res) => {
 
 const loginUser = asyncHandler( async(req, res) => {
 
-    // Will login on the basis of the username, email and password provided
-
-    // TODO: get details from frontend - username, email, password
-    // check if any field is empty
-    // Check if user does not exist
-    // remove the imp fields
-    // generate access and refreshToken
-    // Give access token only through cookies
-
     const {email, username, password} = req.body
 
     if(!username && !email) {
@@ -118,7 +109,91 @@ const loginUser = asyncHandler( async(req, res) => {
 
 })
 
+const forgotPasswordMail = asyncHandler(async (req, res) => {
+
+	const { email } = req.body
+
+	if (!email && !validateEmail(email)) {
+		throw new ApiError(400, 'Please enter a valid email address')
+	}
+
+	const user = await User.findOne({ email })
+
+	if (!user) {
+		throw new ApiError(404, 'User not found')
+	}
+
+	const resetToken = crypto.randomBytes(32).toString('hex')
+
+	user.resetPasswordToken = crypto
+		.createHash('sha256')
+		.update(resetToken)
+		.digest('hex')
+	user.resetPasswordExpires = Date.now() + 15 * 60 * 1000
+
+	await user.save({ validateBeforeSave: false })
+
+	const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+	const mailOptions = {
+	from: '"Password Reset" <noreply@Hackify.com>',
+	to: user.email,
+	subject: 'Password Reset Request',
+	text: `You have requested to reset your password. Click here: ${resetURL}`,
+	html: `<p>You requested a password reset. Click <a href="${resetURL}">here</a> to reset your password.</p>`,
+	};
+
+    try {
+
+		await transporter.sendMail(mailOptions);
+
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                "The reset Password URL has been sent to your email"
+            )
+        )
+
+    } catch (error) {
+
+        user.resetPasswordToken = undefined
+        user.resetPasswordExpires = undefined
+        await user.save({validateBeforeSave : false})
+
+        throw new ApiError(500, "Internal Server Error")
+    }
+
+})
+
+const resetPassword = asyncHandler(async (req, res) => {
+
+    const { resetToken } = req.params;
+    const { password } = req.body;
+
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    const user = await User.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: { $gt: Date.now() }, // Token must be unexpired
+    });
+
+    if (!user) {
+        throw new ApiError(400, 'Invalid or expired reset token');
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    return res.status(200).json(new ApiResponse(200, "Password has been reset successfully."));
+});
+
 export {
     registerUser,
-    loginUser
+    loginUser,
+    forgotPasswordMail,
+    resetPassword
 }
