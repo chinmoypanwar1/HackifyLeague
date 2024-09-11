@@ -7,3 +7,4 @@ A hackathon manager app which you could use to either manage a hackathon with yo
 
 
 # Adding Flutter Code of the integrated Mobile App (hackify) which will share the same backend 
+# Added Splash Screen in Flutter App
