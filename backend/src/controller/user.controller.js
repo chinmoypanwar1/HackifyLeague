@@ -28,6 +28,7 @@ const registerUser = asyncHandler( async(req, res) => {
     // Required fields - Email, Username, FullName, Password
 
     const {username, fullname, email, password} = req.body
+
     if(
         [username,fullname,email,password].some((field) => (
             field?.trim() === ""
