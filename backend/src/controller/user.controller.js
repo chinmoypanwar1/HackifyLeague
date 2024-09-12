@@ -296,6 +296,75 @@ const getUser = asyncHandler( async (req, res) => {
 
 })
 
+const changePassword = asyncHandler( async (req, res) => {
+
+    const { oldPassword, newPassword} = req.body
+
+    if([oldPassword,newPassword].some((field) => (field.trim()===""))) {
+        throw new ApiError(400, "Please provide all the fields")
+    }
+
+    const user = req.user
+
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+
+    if(!isPasswordCorrect) {
+        throw new ApiError(400, "Unauthorized Access")
+    }
+
+    const newUser = await User.findById(user._id)
+
+    newUser.password = newPassword
+
+    try {
+        user.save({validateBeforeSave : false});
+    
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                {},
+                "User's password has been updated successfully"
+            )
+        )
+    } catch (error) {
+        throw new ApiError(500, "Internal Server Error")
+    }
+
+})
+
+const changeAccountDetails = asyncHandler( async (req, res) => {
+
+    const {fullname, description} = req.body
+    
+    if(fullname.trim()==="") {
+        throw new ApiError(400, "Please provide all the fields")
+    }
+
+    const user = await User.findById(req.user._id)
+
+    user.fullname = fullname
+    user.description = description
+
+    try {
+        await user.save({validateBeforeSave : false})
+    
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                {},
+                "User's account detail has been updated"
+            )
+        )
+    } catch (error) {
+        throw new ApiResponse(500, "Internal Server Error")
+    }
+
+})
+
 export {
     registerUser,
     loginUser,
@@ -303,5 +372,7 @@ export {
     logoutUser,
 	forgotPasswordMail,
 	resetPassword,
-    getUser
+    getUser,
+    changePassword,
+    changeAccountDetails
 }
