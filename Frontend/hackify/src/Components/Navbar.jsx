@@ -7,7 +7,7 @@ import { useState } from 'react';
 import {Button} from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({authenticated , setAuthenticated}) => {
 
     const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ const Navbar = () => {
               {mode === 'light' ? 'Dark Mode' : 'Light Mode'}
             </label>
           </div>
-          <Button variant = "contained" sx = {{
+          { !authenticated && (<Button variant = "contained" sx = {{
             margin : '0vmin 1vmin',
             backgroundColor : '#0d6efd',
             '&:hover' : {
@@ -70,7 +70,7 @@ const Navbar = () => {
             onClick={()=>{navigate('/login')}}
           >
             Login
-          </Button>
+          </Button>)}
           <StudentProfile />
         </div>
       </div>

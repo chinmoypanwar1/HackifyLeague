@@ -79,7 +79,7 @@ const LoginItems = styled(Container)(({ theme }) => ({
   },
 }));
 
-const Signup = () => {
+const Signup = ({authenticated , setAuthenticated}) => {
 
     const [loginerror , setLoginerror] = useState('');
 
@@ -134,6 +134,7 @@ const Signup = () => {
     try {
       const response = await axios.post("http://localhost:8080/api/v1/users/login", logindata ,{withCredentials : true});
       console.log(response.data);
+      setAuthenticated(true);
       navigate('/');
     } catch (error) {
         if(error.response && error.response.data.message){
