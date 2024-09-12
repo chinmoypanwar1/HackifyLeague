@@ -221,7 +221,7 @@ const forgotPasswordMail = asyncHandler(async (req, res) => {
 
 	await user.save({ validateBeforeSave: false })
 
-	const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+	const resetURL = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
 
 	const mailOptions = {
 	from: '"Password Reset" <noreply@Hackify.com>',
