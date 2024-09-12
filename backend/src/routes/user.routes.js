@@ -11,7 +11,7 @@ router.route("/login").post(loginUser)
 router.route("/logout").post(verifyJWT, logoutUser)
 router.route("/refresh-token").post(refreshAccessToken)
 router.route("/forgotPassword").post(forgotPasswordMail)
-router.route("/resetPassword/:resetPassword").post(resetPassword)
+router.route("/resetPassword/:resetToken").post(resetPassword)
 router.route("/getUser").get(verifyJWT, getUser)
 
 export default router;
