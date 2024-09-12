@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Container, TextField, Button, Typography} from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios'
 
 const SignUpItems = styled(Container)(({ theme }) => ({
   height: 'auto',
@@ -83,10 +83,10 @@ const Signup = () => {
 
     //signup data
   const [formData, setFormData] = useState({
-    Username: '',
+    username: '',
+    fullname : '',
     email: '',
     password: '',
-    confirmPassword: '',
   });
 
   //login data
@@ -117,9 +117,26 @@ const Signup = () => {
   };
 
   const [account, setAccount] = useState('Signup');
-
-  const handleSubmit = () => {
-    navigate('/');
+  
+  const signupUser = async () => {
+    try {
+      // Directly pass the formData object, no need to stringify
+      const response = await axios.post("http://localhost:8080/api/v1/users/register", formData);
+      console.log(response.data);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const loginUser = async () => {
+    try {
+      // Directly pass the logindata object, no need to stringify
+      const response = await axios.post("http://localhost:8080/api/v1/users/login", logindata);
+      console.log(response.data);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -134,6 +151,14 @@ const Signup = () => {
               label="Username"
               name="Username"
               value={formData.Username}
+              onChange={handleChange}
+              required
+            />
+            <TextField
+              variant="outlined"
+              label="fullname"
+              name="fullname"
+              value={formData.fullname}
               onChange={handleChange}
               required
             />
@@ -155,19 +180,10 @@ const Signup = () => {
               onChange={handleChange}
               required
             />
-            <TextField
-              variant="outlined"
-              label="Confirm Password"
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </Inputs>
+        </Inputs>
 
           <ButtonDiv>
-            <StyledButton variant="contained" onClick={handleSubmit}>
+            <StyledButton variant="contained" onClick = {signupUser}>
               SignUP
             </StyledButton>
           </ButtonDiv>
@@ -207,7 +223,7 @@ const Signup = () => {
           </Inputs>
 
           <ButtonDiv>
-            <StyledButton variant="contained" onClick={handleSubmit}>
+            <StyledButton variant="contained" onClick={loginUser}>
               Login
             </StyledButton>
           </ButtonDiv>
