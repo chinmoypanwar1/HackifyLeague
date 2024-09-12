@@ -81,6 +81,8 @@ const LoginItems = styled(Container)(({ theme }) => ({
 
 const Signup = () => {
 
+    const [loginerror , setLoginerror] = useState('');
+
     //signup data
   const [formData, setFormData] = useState({
     username: '',
@@ -91,8 +93,8 @@ const Signup = () => {
 
   //login data
   const [logindata, setLogindata] = useState({
-    Username: '',
-    Password: '',
+    username: '',
+    password: '',
   });
 
   const navigate = useNavigate();
@@ -120,7 +122,7 @@ const Signup = () => {
   
   const signupUser = async () => {
     try {
-      // Directly pass the formData object, no need to stringify
+
       const response = await axios.post("http://localhost:8080/api/v1/users/register", formData);
       console.log(response.data);
       navigate('/');
@@ -130,12 +132,16 @@ const Signup = () => {
   };
   const loginUser = async () => {
     try {
-      // Directly pass the logindata object, no need to stringify
       const response = await axios.post("http://localhost:8080/api/v1/users/login", logindata);
       console.log(response.data);
       navigate('/');
     } catch (error) {
-      console.log(error);
+        if(error.response && error.response.data.message){
+            setLoginerror(error.response.data.message);
+        }
+        else{
+            setLoginerror("some error occured while login")
+        }
     }
   };
 
@@ -148,9 +154,9 @@ const Signup = () => {
           <Inputs>
             <TextField
               variant="outlined"
-              label="Username"
-              name="Username"
-              value={formData.Username}
+              label="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
             />
@@ -164,7 +170,7 @@ const Signup = () => {
             />
             <TextField
               variant="outlined"
-              label="Email"
+              label="email"
               type="email"
               name="email"
               value={formData.email}
@@ -173,7 +179,7 @@ const Signup = () => {
             />
             <TextField
               variant="outlined"
-              label="Password"
+              label="password"
               type="password"
               name="password"
               value={formData.password}
@@ -205,22 +211,24 @@ const Signup = () => {
           <Inputs>
             <TextField
               variant="outlined"
-              label="Username"
-              name="Username"
+              label="username"
+              name="username"
               value={logindata.Username}
               onChange={handleLoginChange}
               required
             />
             <TextField
               variant="outlined"
-              label="Password"
-              name="Password"
+              label="password"
+              name="password"
               value={logindata.Password}
               type="password"
               onChange={handleLoginChange}
               required
             />
           </Inputs>
+
+          {loginerror && <Typography style={{ color: 'red', marginTop: '10px' }}>{loginerror}</Typography>}
 
           <ButtonDiv>
             <StyledButton variant="contained" onClick={loginUser}>
