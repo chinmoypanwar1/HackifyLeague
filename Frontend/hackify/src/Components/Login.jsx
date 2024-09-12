@@ -132,7 +132,7 @@ const Signup = () => {
   };
   const loginUser = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/users/login", logindata);
+      const response = await axios.post("http://localhost:8080/api/v1/users/login", logindata ,{withCredentials : true});
       console.log(response.data);
       navigate('/');
     } catch (error) {
