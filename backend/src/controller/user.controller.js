@@ -3,6 +3,8 @@ import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.models.js"
 import jwt from "jsonwebtoken"
+import crypto from "crypto"
+import transporter from "../utils/nodeMailer.js";
 
 const generateAccessAndRefreshToken = async(userId) => {
     try {
@@ -21,7 +23,7 @@ const generateAccessAndRefreshToken = async(userId) => {
 }
 
 const registerUser = asyncHandler( async(req, res) => {
-    
+
     // Will register user for both username or email given
     // Required fields - Email, Username, FullName, Password
 
@@ -279,11 +281,26 @@ const resetPassword = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, "Password has been reset successfully."));
 });
 
+const getUser = asyncHandler( async (req, res) => {
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            req.user,
+            "User fetched Successfully"
+        )
+    )
+
+})
+
 export {
     registerUser,
     loginUser,
     refreshAccessToken,
     logoutUser,
 	forgotPasswordMail,
-	resetPassword
+	resetPassword,
+    getUser
 }

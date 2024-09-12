@@ -20,5 +20,22 @@ import userRouter from "./routes/user.routes.js"
 // Routes declaration
 app.use("/api/v1/users", userRouter);
 
+// Global middleware to handle errors
+app.use((err, req, res, next) => {
+    if (err instanceof ApiError) {
+        return res.status(err.statusCode).json({
+            success: err.success,
+            message: err.message,
+            errors: err.errors
+        });
+    }
+
+    return res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+    });
+});
+
+export default app;
 
 export { app };
