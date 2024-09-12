@@ -4,8 +4,12 @@ import '../Public/Css/Navbar.css';
 import SearchBar from './SearchBar';
 import StudentProfile from './StudentProfile';
 import { useState } from 'react';
+import {Button} from '@mui/material'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+
+    const navigate = useNavigate();
 
     const [mode , setMode] = useState('light');
     const handleDarkMode = ()=>{
@@ -56,6 +60,17 @@ const Navbar = () => {
               {mode === 'light' ? 'Dark Mode' : 'Light Mode'}
             </label>
           </div>
+          <Button variant = "contained" sx = {{
+            margin : '0vmin 1vmin',
+            backgroundColor : '#0d6efd',
+            '&:hover' : {
+                backgroundColor : '#0a58ca',
+            }
+            }}
+            onClick={()=>{navigate('/login')}}
+          >
+            Login
+          </Button>
           <StudentProfile />
         </div>
       </div>

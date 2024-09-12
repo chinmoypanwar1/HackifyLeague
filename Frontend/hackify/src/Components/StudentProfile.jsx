@@ -21,11 +21,12 @@ export default function ProfileDrawer() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:8080/api/v1/users/logout", {});
+      await axios.post("http://localhost:8080/api/v1/users/logout", {},{withCredentials : true});
       toggleDrawer(false)(); // Close the drawer before navigating
       navigate('/login');
+      alert("user Logged out successfully!")
     } catch (error) {
-      console.log(error);
+      alert(" Error while logging out user!")
     }
   };
 
