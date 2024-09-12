@@ -190,7 +190,7 @@ const Signup = () => {
 
           <ButtonDiv>
             <StyledButton variant="contained" onClick = {signupUser}>
-              SignUP
+              SignUp
             </StyledButton>
           </ButtonDiv>
 
@@ -203,6 +203,20 @@ const Signup = () => {
               Already Have an Account?
             </StyledButton2>
           </ButtonDiv>
+          <Button 
+             sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '16px', // add space above the button if needed
+                textAlign: 'center', // center text inside button
+                width: '100%' // make the button span the width of its parent container
+              }}
+
+              onClick={()=>{navigate('/forgotpassword')}}
+          >
+            Forgot Password?
+        </Button>
         </SignUpItems>
       ) : (
         <LoginItems>
