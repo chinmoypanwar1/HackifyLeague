@@ -44,7 +44,8 @@ const userSchema = new mongoose.Schema(
             required : false
         },
         avatarImage : {
-            type : String   //--> Cloudinary URL
+            type : String,   //--> Cloudinary URL
+            default : ""
         },
         workRole : {
             type : [String]
