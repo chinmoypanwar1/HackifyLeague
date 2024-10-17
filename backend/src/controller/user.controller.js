@@ -63,7 +63,11 @@ const registerUser = asyncHandler( async(req, res) => {
     }
 
     return res.status(201).json(
-        new ApiResponse(200, createdUser, "User Registered Successfully")
+        new ApiResponse(
+            200,
+            "User Registered Successfully",
+            createdUser
+        )
     )
 
 })
@@ -106,10 +110,10 @@ const loginUser = asyncHandler( async(req, res) => {
     .json(
         new ApiResponse(
             200,
+            "User logged in Successfully",
             {
                 user : loggedInUser, accessToken, refreshToken
-            },
-            "User logged in Successfully"
+            }
         )
     )
 
@@ -143,8 +147,8 @@ const logoutUser = asyncHandler( async(req, res) => {
     .json(
         new ApiResponse(
             200,
-            {},
-            "User has been logged out Successfully"
+            "User has been logged out Successfully",
+            {}
         )
     )
 })
@@ -191,8 +195,8 @@ const refreshAccessToken = asyncHandler( async(req, res) => {
         .json(
             new ApiResponse(
                 200,
-                {accessToken, refreshToken},
-                "Access Token Refreshed"
+                "Access Token Refreshed",
+                {accessToken, refreshToken}
             )
         )
 
@@ -291,48 +295,52 @@ const getUser = asyncHandler( async (req, res) => {
     .json(
         new ApiResponse(
             200,
+            "User fetched Successfully",
             req.user,
-            "User fetched Successfully"
         )
     )
 
 })
 
-const changePassword = asyncHandler( async (req, res) => {
+const changePassword = asyncHandler(async(req, res) => {
+    const {oldPassword, newPassword} = req.body
 
-    const { oldPassword, newPassword} = req.body
-
-    if([oldPassword,newPassword].some((field) => (field.trim()===""))) {
-        throw new ApiError(400, "Please provide all the fields")
-    }
-
-    const user = req.user
-
+    const user = await User.findById(req.user?._id)
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
 
-    if(!isPasswordCorrect) {
-        throw new ApiError(400, "Unauthorized Access")
+    if (!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid old password")
     }
 
-    const newUser = await User.findById(user._id)
+    user.password = newPassword
+    await user.save({validateBeforeSave: false})
 
-    newUser.password = newPassword
+    return res
+    .status(200)
+    .json(new ApiResponse(200, "Password changed successfully", {}))
+})
+
+const addTags = asyncHandler(async(req, res) => {
+
+    const {tags} = req.body
+
+    if(!Array.isArray(tags) || !tags.every((tag) => typeof tag === "string")) {
+        throw new ApiError(400, "Tags must be an array of strings");
+    }
+
+    const user = await User.findById(req.user._id)
+
+    user.tags = [...user.tags, tags]
 
     try {
-        user.save({validateBeforeSave : false});
-    
-        return res
-        .status(200)
-        .json(
-            new ApiResponse(
-                200,
-                {},
-                "User's password has been updated successfully"
-            )
-        )
+        await user.save({validateBeforeSave : false})
     } catch (error) {
         throw new ApiError(500, "Internal Server Error")
     }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, "Tags added successfully", {}))
 
 })
 
