@@ -18,8 +18,7 @@ const createTeam = asyncHandler(async(req, res) => {
     try {
         const {user} = req.user
         const {hackathonId, displayName, description} = req.body
-    
-        
+
         if(
             [hackathonId, displayName, description].some((field) => (
                 field?.trim() === ""
@@ -43,9 +42,13 @@ const createTeam = asyncHandler(async(req, res) => {
         if(hackathon.endDate < new Date()) {
             throw new ApiError(400, "Hackathon has ended")
         }
-
         if((await memberExistsInTeam(user._id, hackathonId))) {
             throw new ApiError(400, "You already exists in a team.")
+        }
+
+        const teamCount = await Team.countDocuments({hackathon : hackathonId})
+        if(teamCount >= hackathon.limit) {
+            throw new ApiError(400, "The hackathon has been enrolled fully.")
         }
     
         const team = await Team.create({
@@ -122,6 +125,10 @@ const addMemberToTeam = asyncHandler(async(req, res) => {
 
     if(team.members.find(member => (member.user.toString() === user._id.toString() && member.role==="admin"))) {
         throw new ApiError(400, "You are not an admin. Please request the admin to add the user.")
+    }
+
+    if(team.members.length >= team.teamMemberLimit) {
+        throw new ApiError(400, "The team is already full.")
     }
 
     try {

@@ -18,10 +18,12 @@ app.use(cookieParser())
 // Routes import 
 import userRouter from "./routes/user.routes.js"
 import teamRouter from "./routes/team.routes.js"
+import hackathonRouter from "./routes/hackathon.routes.js"
 
 // Routes declaration
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/teams", teamRouter);
+app.use("/api/v1/hackathons", hackathonRouter);
 
 // Global middleware to handle errors
 app.use((err, req, res, next) => {
