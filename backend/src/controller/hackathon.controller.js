@@ -5,6 +5,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/apiError.js";
 
 const createHackathon = asyncHandler(async (req, res) => {
+
+    console.log(req.body)
     
     const { displayName, host, limit, teamMemberLimit, description, location, companyLink, sponsorLink, prizePool, tags, startDate, endDate, RegistrationDeadline } = req.body
 
@@ -20,14 +22,23 @@ const createHackathon = asyncHandler(async (req, res) => {
     if(startDate < (Date.now() + 5*24*60*60*1000) || endDate < (Date.now() + 7*24*60*60*1000) || RegistrationDeadline < (Date.now() + 3*24*60*60*1000)) {
         throw new ApiError(400, "Start date, end date and registration deadline must be in future")
     }
-    if(startDate < RegistrationDeadline) {
+    if(startDate <= RegistrationDeadline) {
         throw new ApiError(400, "Start date must be after registration deadline")
     }
-    if(startDate < endDate) {
+    if(startDate >= endDate) {
         throw new ApiError(400, "Start date must be before end date")
     }
-    if(RegistrationDeadline > endDate) {
+    if(RegistrationDeadline >= endDate) {
         throw new ApiError(400, "Registration deadline must be before end date")
+    }
+    let hostUser = [];
+
+    for(let i=0; i<host.length; i++) {
+        const existingUser = await User.findOne({username : host[i]})
+        if(!existingUser) {
+            throw new ApiError(400, "Please provide a valid host.")
+        }
+        hostUser.push(existingUser._id)
     }
 
     const existedHackathon = await Hackathon.findOne({displayName});
@@ -51,16 +62,13 @@ const createHackathon = asyncHandler(async (req, res) => {
         RegistrationDeadline
     })
 
-    let hostUser = [];
+    console.log(hackathon)
 
-    for(let i=0; i<host.length; i++) {
-        hostUser.push(await User.findOne({
-            username : host[i]
-        }))
-    }
 
     hackathon.host = hostUser;
     hackathon.save();
+
+    console.log(hackathon)
 
     return res
     .status(201)
@@ -80,7 +88,7 @@ const getHackathons = asyncHandler(async(req, res) => {
     .sort({RegistrationDeadline : 1})
     .skip((page-1)*limit)
     .limit(Number(limit))
-    .select("displayName limit teamMemberLimit location")
+    .select("displayName limit teamMemberLimit location prizePool")
 
     return res
     .status(200)
@@ -94,6 +102,8 @@ const getHackathonById = asyncHandler(async (req, res) => {
 
     const { hackathonId } = req.params
     const hackathon = await Hackathon.findById(hackathonId)
+
+    console.log(req.params)
 
     if(!hackathon) {
         throw new ApiError(404, "Please provide a valid hackathon Id.")
@@ -110,8 +120,8 @@ const getHackathonById = asyncHandler(async (req, res) => {
 const updateHackathonDetails = asyncHandler(async (req, res) => {
 
     const user = req.user;
+    console.log(user)
     const { 
-        hackathonId, 
         displayName, 
         host, 
         limit, 
@@ -124,21 +134,29 @@ const updateHackathonDetails = asyncHandler(async (req, res) => {
         startDate, 
         endDate 
     } = req.body;
+    const { hackathonId } = req.params;
 
+    console.log("Update Hackathon consoles.")
+    
     const hackathon = await Hackathon.findById(hackathonId);
-
+    console.log(hackathon)
+    
+    console.log("Update Hackathon consoles.")
+    console.log("The type of user._id is : ", typeof(user._id))
+    console.log(typeof(hackathon.host[0]))
     if (!hackathon) {
         throw new ApiError(404, "Please provide a valid hackathon Id");
     }
 
+    
     // Check if user is host/admin of the hackathon
     let isHost = hackathon.host.some(hostId => hostId.equals(user._id));
     if (!isHost) {
         throw new ApiError(400, "You are not an admin.");
     }
-
+    
     // Validate deadlines and other constraints
-    if (hackathon.RegistrationDeadline < Date.now()) {
+    if (hackathon.startDate < Date.now()) {
         throw new ApiError(400, "You cannot update the hackathon after the registration has ended.");
     }
     if (limit < 50 || limit > 3000) {

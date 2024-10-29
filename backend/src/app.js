@@ -28,13 +28,11 @@ app.use("/api/v1/hackathons", hackathonRouter);
 // Global middleware to handle errors
 app.use((err, req, res, next) => {
     if (err instanceof ApiError) {
-        // Only return statusCode and message
         return res.status(err.statusCode).json({
             message: err.message
         });
     }
 
-    // Fallback for unknown errors
     return res.status(500).json({
         message: "Internal Server Error"
     });

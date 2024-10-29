@@ -30,7 +30,7 @@ const hackathonSchema = new mongoose.Schema(
       required: true,
     },
     location: {
-      type: [Number],
+      type: [String],
       required: true,
     },
     companyLink: [
