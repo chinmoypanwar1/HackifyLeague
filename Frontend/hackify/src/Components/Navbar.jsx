@@ -1,76 +1,91 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../Public/Css/Navbar.css';
-import SearchBar from './SearchBar';
 import StudentProfile from './StudentProfile';
-import { useState } from 'react';
-import {Button} from '@mui/material'
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import ThemeContext from '../Context/ThemeContext';
 
-const Navbar = ({authenticated , setAuthenticated}) => {
+const Navbar = ({ authenticated }) => {
+  const navigate = useNavigate();
+  const { isDark, toggleTheme } = useContext(ThemeContext);
 
-    const navigate = useNavigate();
+  const handleDarkMode = () => {
+    toggleTheme();
+  };
 
-    const [mode , setMode] = useState('light');
-    const handleDarkMode = ()=>{
-        mode === 'light' ? setMode('dark') : setMode('light');
-    }
   return (
-    <nav className={`navbar-container navbar-${mode} bg-${mode}`}>
+    <nav
+      className={`navbar-container ${isDark ? 'dark-mode' : 'light-mode'}`}
+    >
       <div className="navbar-content">
-        <a href="/" className="navbar-logo" style = {{textDecoration : 'none', marginLeft : '5vmin'}}>
+        <a
+          href="/"
+          className="navbar-logo"
+          style={{
+            textDecoration: 'none',
+            marginLeft: '5vmin',
+            color: '#0b6efd',
+          }}
+        >
           Hackify
         </a>
 
         <div className="navbar-center">
           <ul className="navbar-links">
             <li>
-              <a href="/">Home</a>
+              <a href="/" style={{ color: '#0b6efd' }}>Home</a>
             </li>
             <li>
-              <a href="/about">About</a>
+              <a href="/about" style={{ color: '#0b6efd' }}>About</a>
             </li>
             <li>
-              <a href="/contact">ContactUs</a>
+              <a href="/contact" style={{ color: '#0b6efd' }}>Contact Us</a>
+            </li>
+            <li>
+              <a href="/hackathons" style={{ color: '#0b6efd' }}>Hackathons</a>
             </li>
           </ul>
-          <form className="search-form">
-            <SearchBar style={{ marginTop: '1rem' }} />
-          </form>
         </div>
 
         <div className="navbar-right">
           <div
-            className={`form-check form-switch text-${
-              mode === 'light' ? 'dark' : 'light'
-            } mx-3`}
+            className={`form-check form-switch text-${isDark ? 'light' : 'dark'} mx-3`}
           >
             <input
               className="form-check-input"
               type="checkbox"
               role="switch"
               id="flexSwitchCheckDefault"
+              checked={isDark}
               onChange={handleDarkMode}
             />
             <label
               className="form-check-label"
               htmlFor="flexSwitchCheckDefault"
-              style={{ color: mode === 'light' ? 'black' : 'white' }}
+              style={{ color: '#0b6efd' }}
             >
-              {mode === 'light' ? 'Dark Mode' : 'Light Mode'}
+              {isDark ? 'Dark Mode' : 'Light Mode'}
             </label>
           </div>
-          { !authenticated && (<Button variant = "contained" sx = {{
-            margin : '0vmin 1vmin',
-            backgroundColor : '#0d6efd',
-            '&:hover' : {
-                backgroundColor : '#0a58ca',
-            }
-            }}
-            onClick={()=>{navigate('/login')}}
-          >
-            Login
-          </Button>)}
+          {!authenticated && (
+            <Button
+              variant="contained"
+              sx={{
+                margin: '0vmin 1vmin',
+                backgroundColor: '#0b6efd',
+                '&:hover': {
+                  backgroundColor: '#084dbf',
+                },
+              }}
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              Login
+            </Button>
+          )}
           <StudentProfile />
         </div>
       </div>
@@ -79,4 +94,3 @@ const Navbar = ({authenticated , setAuthenticated}) => {
 };
 
 export default Navbar;
-    
