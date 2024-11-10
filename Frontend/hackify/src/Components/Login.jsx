@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Container, TextField, Button, Typography} from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
+// import {AnimationCircles} from '../Animation/login-bg'
 import axios from 'axios'
 
 const SignUpItems = styled(Container)(({ theme }) => ({
@@ -148,6 +149,7 @@ const Signup = ({authenticated , setAuthenticated}) => {
 
   return (
     <>
+    {/* <AnimationCircles/> */}
       {account === 'Signup' ? (
         <SignUpItems>
           <StyledTypography>Sign Up</StyledTypography>
