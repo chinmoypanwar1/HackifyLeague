@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema(
             lowercase : true,
             trim : true,
             index : true,
-            maxlength : 12
         },
         fullname : {
             type : String,
@@ -44,7 +43,8 @@ const userSchema = new mongoose.Schema(
             required : false
         },
         avatarImage : {
-            type : String   //--> Cloudinary URL
+            type : String,   //--> Cloudinary URL
+            default : ""
         },
         workRole : {
             type : [String]

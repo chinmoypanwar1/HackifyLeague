@@ -5,6 +5,8 @@ import { User } from "../models/user.models.js"
 import jwt from "jsonwebtoken"
 import crypto from "crypto"
 import transporter from "../utils/nodeMailer.js";
+import {uploadOnCloudinary, deleteOnCloudinary} from "../utils/cloudinary.js"
+import { extractPublicId } from 'cloudinary-build-url'
 
 const generateAccessAndRefreshToken = async(userId) => {
     try {
@@ -61,7 +63,11 @@ const registerUser = asyncHandler( async(req, res) => {
     }
 
     return res.status(201).json(
-        new ApiResponse(200, createdUser, "User Registered Successfully")
+        new ApiResponse(
+            200,
+            "User Registered Successfully",
+            createdUser
+        )
     )
 
 })
@@ -104,10 +110,10 @@ const loginUser = asyncHandler( async(req, res) => {
     .json(
         new ApiResponse(
             200,
+            "User logged in Successfully",
             {
                 user : loggedInUser, accessToken, refreshToken
-            },
-            "User logged in Successfully"
+            }
         )
     )
 
@@ -141,8 +147,8 @@ const logoutUser = asyncHandler( async(req, res) => {
     .json(
         new ApiResponse(
             200,
-            {},
-            "User has been logged out Successfully"
+            "User has been logged out Successfully",
+            {}
         )
     )
 })
@@ -189,8 +195,8 @@ const refreshAccessToken = asyncHandler( async(req, res) => {
         .json(
             new ApiResponse(
                 200,
-                {accessToken, refreshToken},
-                "Access Token Refreshed"
+                "Access Token Refreshed",
+                {accessToken, refreshToken}
             )
         )
 
@@ -289,11 +295,166 @@ const getUser = asyncHandler( async (req, res) => {
     .json(
         new ApiResponse(
             200,
+            "User fetched Successfully",
             req.user,
-            "User fetched Successfully"
         )
     )
 
+})
+
+const changePassword = asyncHandler(async(req, res) => {
+    const {oldPassword, newPassword} = req.body
+
+    const user = await User.findById(req.user?._id)
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+
+    if (!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid old password")
+    }
+
+    user.password = newPassword
+    await user.save({validateBeforeSave: false})
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, "Password changed successfully", {}))
+})
+
+const addTags = asyncHandler(async(req, res) => {
+
+    const {tags} = req.body
+
+    if(!Array.isArray(tags) || !tags.every((tag) => typeof tag === "string")) {
+        throw new ApiError(400, "Tags must be an array of strings");
+    }
+
+    const user = await User.findById(req.user._id)
+
+    user.tags = [...user.tags, tags]
+
+    try {
+        await user.save({validateBeforeSave : false})
+    } catch (error) {
+        throw new ApiError(500, "Internal Server Error")
+    }
+
+    return res
+    .status(200)
+    .json(new ApiResponse(200, "Tags added successfully", {}))
+
+})
+
+const changeAccountDetails = asyncHandler( async (req, res) => {
+
+    const {fullname, description, workRoles} = req.body
+    
+    if(fullname.trim()==="") {
+        throw new ApiError(400, "Please provide all the fields")
+    }
+    if(description.trim()==="") {
+        throw new ApiError(400, "Please provide all the fields")
+    }
+    if (!Array.isArray(workRoles) || !workRoles.every((role) => typeof role === "string")) {
+        throw new ApiError(400, "Work roles must be an array of strings");
+    }
+
+    const user = await User.findById(req.user._id)
+
+    user.fullname = fullname
+    user.description = description
+    user.workRole = workRoles
+
+    try {
+        await user.save({validateBeforeSave : false})
+    
+        return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                "User's account detail has been updated",
+                user
+            )
+        )
+    } catch (error) {
+        throw new ApiResponse(500, "Internal Server Error")
+    }
+
+})
+
+const uploadAvatarImage = asyncHandler( async( req, res) => {
+
+    try {
+        const user = req.user
+        const avatarImage = req.file?.path
+    
+        if(!avatarImage) {
+            throw new ApiError(400, "Please upload a file")
+        }
+    
+        const avatar = await uploadOnCloudinary(avatarImage)
+
+        if(!avatar) {
+            throw new ApiError(400, "Avatar file is required")
+        }
+
+        const newUser = await User.findByIdAndUpdate(user?._id, {
+            avatarImage : avatar?.url
+        }, { new : true}).select("-password -refreshToken")
+
+        return res.json(
+            new ApiResponse(
+                200,
+                "Avatar Image Uploaded Successfully",
+                newUser
+            )
+        )
+    } catch (error) {
+        throw new ApiError(
+            500, 
+            "Error uploading the avatar image."
+        )
+    }
+
+})
+
+const updateAvatarImage = asyncHandler( async (req, res) => {
+
+    try {
+        const user = req.user;
+        const publicId = extractPublicId(user?.avatarImage)
+        const avatarImage = req.file?.path
+    
+        if(!avatarImage) {
+            throw new ApiError(400, "Please upload a file")
+        }
+    
+        const response = await deleteOnCloudinary(publicId)
+        if(!response) {
+            throw new ApiError(400, "Avatar File is Required")
+        }
+    
+        const avatar = await uploadOnCloudinary(avatarImage)
+    
+        if(!avatar) {
+            throw new ApiError(400, "Avatar file is required")
+        }
+    
+        const newUser = await User.findByIdAndUpdate(user?._id, {
+            avatarImage : avatar?.url
+        }, { new : true}).select("-password -refreshToken")
+    
+        return res.json(
+            new ApiResponse(
+                200,
+                "Avatar Image Uploaded Successfully",
+                newUser
+            )
+        )
+    } catch (error) {
+        throw new ApiError(500, "Internal Server Error")
+    }
+    
 })
 
 export {
@@ -303,5 +464,9 @@ export {
     logoutUser,
 	forgotPasswordMail,
 	resetPassword,
-    getUser
+    getUser,
+    changePassword,
+    changeAccountDetails,
+    uploadAvatarImage,
+    updateAvatarImage
 }

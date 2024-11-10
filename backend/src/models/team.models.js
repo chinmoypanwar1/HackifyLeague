@@ -1,42 +1,47 @@
 import mongoose from "mongoose";
 
 const teamSchema = new mongoose.Schema(
-    {
-        displayname : {
-            type : String,
-            required : true,
-            maxlength : 30
-        },
-        members : [
-            {
-                type : mongoose.Schema.ObjectId.ObjectId,
-                ref: "User"
-            },
-            {
-                type : String,
-                required : true
-            }
-        ],
-        description : {
-            type : String,
-            required : false,
-            maxlength : 300
-        },
-        invitationId : {
-            type : String
-        },
-        hackathon : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "Hackathon"
-        },
-        project : {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : "Project"
-        }
+  {
+    displayname: {
+      type: String,
+      required: true,
+      maxlength: 30,
+      unique : true
     },
-    {
-        timestamps : true
-    }
-)
+    members: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        role : {
+          type : String,
+          enum : ["admin", "member"],
+        }
+      },
+    ],
+    description: {
+      type: String,
+      maxlength: 300,
+    },
+    hackathon: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Hackathon",
+      required: true,
+    },
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+    },
+    teamMemberLimit: {
+      type: Number,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 export const Team = mongoose.model("Team", teamSchema);

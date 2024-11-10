@@ -48,7 +48,8 @@ const Home = () => {
         </CTAButton>
       </HeroSection>
 
-      {/* Features Section */}
+      {/* 
+      Features Section */}
       <FeatureSection maxWidth="md">
         <Typography variant="h4" component="h2" gutterBottom>
           Features
