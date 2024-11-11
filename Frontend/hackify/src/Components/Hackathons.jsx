@@ -55,6 +55,19 @@ const hackathonsData = [
     details: "A web development hackathon focusing on innovative front-end and back-end solutions.",
     image: "https://img.freepik.com/free-vector/hackathon-technology-infographic-with-flat-icons_88138-961.jpg", 
   },
+  {
+    title: "Web Dev Sprint",
+    organizer: "WebNation",
+    eligibility: "Freshers and Sophomores",
+    date: "May 20 - May 22, 2024",
+    type: "Web Development",
+    participants: 150,
+    prizes: "1st: $3000, 2nd: $1500, 3rd: $500",
+    location: "Hybrid",
+    duration: "36 hours",
+    details: "A web development hackathon focusing on innovative front-end and back-end solutions.",
+    image: "https://media.istockphoto.com/id/1210803911/id/vektor/orang-orang-bekerja-sama-hackathon-vector-ilustrasi-datar-programmer-bekerja-dengan-data.jpg?s=612x612&w=0&k=20&c=JtHeIt4ZcvkgLat3mAkRmp_IAq6t1vtyTAEcHDvE9w4=", 
+  },
 ];
 
 const HackathonsPage = () => {
@@ -101,36 +114,40 @@ const HackathonsPage = () => {
           </Typography>
         </Box>
 
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-          <TextField
-            label="Search Hackathons"
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') handleSearchClick();
-            }}
-            style={{
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', width: '100%' }}>
+          <div style={{ display: 'flex', alignItems: 'center', width: '100%', maxWidth: '600px' }}>
+            <TextField
+              label="Search Hackathons"
+              variant="outlined"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') handleSearchClick();
+              }}
+              style={{
                 backgroundColor: 'white',
-                borderRadius: '8px 0 0 8px',
                 flexGrow: 1,
-                marginRight: '-1px',
-            }}
-          />
-          <Button
-            onClick={handleSearchClick}
-            variant="contained"
-            style={{
-              backgroundColor: '#0b6efd',
-              color: 'white',
-              borderRadius: '0 8px 8px 0',
-              padding: '12px 20px',
-              fontSize: '16px',
-              fontWeight: 'bold',
-            }}
-          >
-            <Search />
-          </Button>
+                marginRight: '5px',
+              }}
+            />
+            <Button
+              onClick={handleSearchClick}
+              variant="contained"
+              style={{
+                backgroundColor: '#0b6efd',
+                color: 'white',
+                padding: '10px 20px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+              }}
+            >
+              <Search />
+              Search
+            </Button>
+          </div>
         </div>
 
         <Grid container spacing={4} justifyContent="center">
