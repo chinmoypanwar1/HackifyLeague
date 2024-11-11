@@ -10,7 +10,7 @@
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #0b6efd;
+  color: #0b6efd; /* Default logo color for light mode */
   text-decoration: none;
   margin-left: 5vmin;
 }
@@ -40,7 +40,7 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: #0b6efd;
+  color: #0b6efd; /* Default color for light mode */
   font-size: 1.1rem;
   position: relative;
   transition: color 0.3s ease;
@@ -118,9 +118,18 @@
 
 /* Dark Mode and Light Mode Styling */
 .dark-mode {
-  background-color: #343a40;
+  background-color: #202428;
   color: white;
-  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3);
+  border-bottom: 2px solid white;
+  transition: ease 0.3s;
+}
+
+.dark-mode .navbar-links a {
+  color: white; /* Change links color to white in dark mode */
+}
+
+.dark-mode .navbar-logo {
+  color: white !important; /* Force the logo color to be white in dark mode */
 }
 
 .light-mode {

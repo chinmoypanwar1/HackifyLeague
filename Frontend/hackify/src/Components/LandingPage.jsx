@@ -42,7 +42,6 @@ const LandingPage = () => {
           Get Started
         </CTAButton>
       </HeroSection>
-
       <Footer />
     </Box>
   );

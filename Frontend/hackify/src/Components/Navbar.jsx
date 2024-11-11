@@ -35,16 +35,16 @@ const Navbar = ({ authenticated }) => {
         <div className="navbar-center">
           <ul className="navbar-links">
             <li>
-              <a href="/" style={{ color: '#0b6efd' }}>Home</a>
+              <a href="/">Home</a>
             </li>
             <li>
-              <a href="/about" style={{ color: '#0b6efd' }}>About</a>
+              <a href="/about">About</a>
             </li>
             <li>
-              <a href="/contact" style={{ color: '#0b6efd' }}>Contact Us</a>
+              <a href="/contact">Contact Us</a>
             </li>
             <li>
-              <a href="/hackathons" style={{ color: '#0b6efd' }}>Hackathons</a>
+              <a href="/hackathons">Hackathons</a>
             </li>
           </ul>
         </div>
