@@ -102,14 +102,14 @@ const HackathonsPage = () => {
       <div style={{ padding: '20px', backgroundColor: '#f9f9f9' }}>
         <Box
           sx={{
-            background: 'linear-gradient(90deg, #0b6efd, #0a58ca)', 
+            background: 'linear-gradient(90deg, #ffb300, #ffc107, #ff9800)', // Enhanced gradient
             padding: '40px 20px', 
             borderRadius: '10px', 
             marginBottom: '40px',
             marginTop: '10px',
           }}
         >
-          <Typography variant="h4" align="center" gutterBottom style={{ color: 'white', fontWeight: 'bold' }}>
+          <Typography variant="h4" align="center" gutterBottom style={{ color: 'black', fontWeight: 'bold' }}>
             Join the world's best online and in-person hackathons
           </Typography>
         </Box>
@@ -134,8 +134,8 @@ const HackathonsPage = () => {
               onClick={handleSearchClick}
               variant="contained"
               style={{
-                backgroundColor: '#0b6efd',
-                color: 'white',
+                backgroundColor: '#ffc107',
+                color: 'black',
                 padding: '10px 20px',
                 fontSize: '16px',
                 fontWeight: 'bold',
@@ -144,7 +144,7 @@ const HackathonsPage = () => {
                 gap: '5px',
               }}
             >
-              <Search />
+              <Search style={{ fill: 'black' }} /> {/* Ensures the Search icon stays black */}
               Search
             </Button>
           </div>
@@ -176,62 +176,56 @@ const HackathonsPage = () => {
                   }}
                 />
                 <CardContent style={{ flex: 1 }}>
-                  <Typography variant="h5" gutterBottom>{hackathon.title}</Typography>
-                  <Typography variant="body2" color="textSecondary">
+                  <Typography variant="h5" gutterBottom style={{ color: 'black' }}>{hackathon.title}</Typography>
+                  <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
                     Organized by {hackathon.organizer}
                   </Typography>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <School style={{ marginRight: '8px' }} color="primary" />
-                      <Typography variant="body2" color="textSecondary">
+                      <School style={{ marginRight: '8px', color: '#ffc107' }} />
+                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
                         Eligibility: {hackathon.eligibility}
                       </Typography>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <CalendarToday style={{ marginRight: '8px' }} color="primary" />
-                      <Typography variant="body2" color="textSecondary">
+                      <CalendarToday style={{ marginRight: '8px', color: '#ffc107' }} />
+                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
                         Date: {hackathon.date}
                       </Typography>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <Group style={{ marginRight: '8px' }} color="primary" />
-                      <Typography variant="body2" color="textSecondary">
+                      <Group style={{ marginRight: '8px', color: '#ffc107' }} />
+                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
                         Participants: {hackathon.participants}
                       </Typography>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <EmojiEvents style={{ marginRight: '8px' }} color="primary" />
-                      <Typography variant="body2" color="textSecondary">
+                      <EmojiEvents style={{ marginRight: '8px', color: '#ffc107' }} />
+                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
                         Prizes: {hackathon.prizes}
-                      </Typography>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <CalendarToday style={{ marginRight: '8px' }} color="primary" />
-                      <Typography variant="body2" color="textSecondary">
-                        Duration: {hackathon.duration}
-                      </Typography>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <Group style={{ marginRight: '8px' }} color="primary" />
-                      <Typography variant="body2" color="textSecondary">
-                        Location: {hackathon.location}
                       </Typography>
                     </div>
                   </div>
 
                   <Button
-                    variant="contained"
-                    color="primary"
                     onClick={() => handleViewMore(hackathon)}
-                    style={{ marginTop: '15px' }}
+                    variant="outlined"
+                    color="primary"
+                    sx={{
+                      marginTop: '15px',
+                      borderColor: '#ffc107', // Set the outline color to #ffc107
+                      '&:hover': {
+                        borderColor: '#ffc107', // Ensure the outline color stays the same on hover
+                        color: '#ffc107', // Optionally, change text color on hover to match the outline
+                      },
+                      color : '#000'
+                    }}
                   >
-                    View More
+                      View More
                   </Button>
                 </CardContent>
               </Card>
@@ -239,25 +233,22 @@ const HackathonsPage = () => {
           ))}
         </Grid>
 
-        {/* Dialog for "View More" */}
-        <Dialog open={Boolean(selectedHackathon)} onClose={handleCloseDialog}>
-          {selectedHackathon && (
-            <>
-              <DialogTitle>{selectedHackathon.title}</DialogTitle>
-              <DialogContent>
-                <Typography color="textSecondary">Organizer: {selectedHackathon.organizer}</Typography>
-                <Typography color="textSecondary">Eligibility: {selectedHackathon.eligibility}</Typography>
-                <Typography color="textSecondary">Date: {selectedHackathon.date}</Typography>
-                <Typography color="textSecondary">Type: {selectedHackathon.type}</Typography>
-                <Typography color="textSecondary">Participants: {selectedHackathon.participants}</Typography>
-                <Typography color="textSecondary">Prizes: {selectedHackathon.prizes}</Typography>
-                <Typography color="textSecondary">Location: {selectedHackathon.location}</Typography>
-                <Typography color="textSecondary">Duration: {selectedHackathon.duration}</Typography>
-                <Typography paragraph>{selectedHackathon.details}</Typography>
-              </DialogContent>
-            </>
-          )}
-        </Dialog>
+        {selectedHackathon && (
+          <Dialog open={Boolean(selectedHackathon)} onClose={handleCloseDialog}>
+            <DialogTitle>{selectedHackathon.title}</DialogTitle>
+            <DialogContent>
+              <Typography variant="body1" style={{ color: 'black' }}>
+                {selectedHackathon.details}
+              </Typography>
+              <Typography variant="body2" style={{ color: 'black', marginTop: '10px' }}>
+                Location: {selectedHackathon.location}
+              </Typography>
+              <Typography variant="body2" style={{ color: 'black' }}>
+                Duration: {selectedHackathon.duration}
+              </Typography>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </>
   );
