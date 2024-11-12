@@ -10,9 +10,14 @@
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #0b6efd; /* Default logo color for light mode */
+  color: black; /* Updated logo color */
   text-decoration: none;
   margin-left: 5vmin;
+  transition: ease 0.3s;
+}
+.navbar-logo:hover {
+  color: #ffc107; /* Change the color to #ffc107 on hover */
+  transform: scale(1.1); /* Slightly enlarge the logo on hover */
 }
 
 .navbar-content {
@@ -40,7 +45,7 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: #0b6efd; /* Default color for light mode */
+  color: black; /* Updated link color */
   font-size: 1.1rem;
   position: relative;
   transition: color 0.3s ease;
@@ -55,7 +60,7 @@
   position: absolute;
   width: 100%;
   height: 2px;
-  background-color: #0b6efd;
+  background-color: #ffc107; /* Updated hover underline color */
   bottom: -5px;
   left: 0;
   transform: scaleX(0);
@@ -127,11 +132,12 @@
 .dark-mode .navbar-links a {
   color: white; /* Change links color to white in dark mode */
 }
-
 .dark-mode .navbar-logo {
   color: white !important; /* Force the logo color to be white in dark mode */
 }
-
+.dark-mode .navbar-logo:hover{
+  color : #ffc107 !important;
+}
 .light-mode {
   background-color: #f5f5f5;
   color: black;

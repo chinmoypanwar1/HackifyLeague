@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import '../Public/Css/Navbar.css';
+import '../Assets/Css/Navbar.css';
 import StudentProfile from './StudentProfile';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +26,6 @@ const Navbar = ({ authenticated }) => {
           style={{
             textDecoration: 'none',
             marginLeft: '5vmin',
-            color: '#0b6efd',
           }}
         >
           Hackify
@@ -64,7 +63,7 @@ const Navbar = ({ authenticated }) => {
             <label
               className="form-check-label"
               htmlFor="flexSwitchCheckDefault"
-              style={{ color: '#0b6efd' }}
+              style={{ color: isDark ? 'white' : 'black' }}
             >
               {isDark ? 'Dark Mode' : 'Light Mode'}
             </label>
@@ -74,9 +73,10 @@ const Navbar = ({ authenticated }) => {
               variant="contained"
               sx={{
                 margin: '0vmin 1vmin',
-                backgroundColor: '#0b6efd',
+                color : '#000',
+                backgroundColor: '#ffc107',
                 '&:hover': {
-                  backgroundColor: '#084dbf',
+                  backgroundColor: '#e0a800',
                 },
               }}
               onClick={() => {

@@ -17,21 +17,21 @@ const HeroSection = styled(Box)({
 const CTAButton = styled(Button)({
   marginTop: '24px', 
   padding: '12px 32px', 
-  backgroundColor: '#0d6efd',
-  color: '#fff',
+  backgroundColor: '#ffc107',
+  color: '#000',
   fontSize: '1.2rem',
   '&:hover': {
-    backgroundColor: '#004080',
+    backgroundColor: '#e0a800',
   },
 });
 
 const LandingPage = () => {
   const { theme } = useContext(ThemeContext);
-  console.log(theme); 
 
   return (
     <Box>
-      <HeroSection style={{ backgroundColor: theme?.backgroundColor, color : theme.color}}>
+      {/* Main Hero Section */}
+      <HeroSection style={{ backgroundColor: theme?.backgroundColor, color: theme?.color }}>
         <Typography variant="h2" component="h1" gutterBottom>
           Welcome to Hackify
         </Typography>
@@ -42,6 +42,7 @@ const LandingPage = () => {
           Get Started
         </CTAButton>
       </HeroSection>
+
       <Footer />
     </Box>
   );
