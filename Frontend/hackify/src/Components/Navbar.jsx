@@ -37,10 +37,10 @@ const Navbar = ({ authenticated }) => {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="/about">About</a>
+              <a href="/about">About Us</a>
             </li>
             <li>
-              <a href="/contact">Contact Us</a>
+              <a href="/projects">Projects</a>
             </li>
             <li>
               <a href="/hackathons">Hackathons</a>

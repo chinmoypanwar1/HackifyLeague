@@ -14,13 +14,18 @@
     "aceternity": "^1.0.1",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
-    "framer-motion": "^11.5.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.15",
     "raf": "^3.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
+    "tailwind-merge": "^2.5.4",
+=======
     "styled-components": "^6.1.13",
+>>>>>>> 3e862adeb5e69c8e06d80599ce9639d60d666b7b
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -48,8 +53,11 @@
     ]
   },
   "devDependencies": {
+<<<<<<< HEAD
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
+=======
+>>>>>>> ffceaa522611f7c6aed36909b0f40577eb138b55
     "tailwindcss": "^3.4.14"
   }
 }

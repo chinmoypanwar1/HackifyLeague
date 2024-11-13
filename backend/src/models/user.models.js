@@ -49,42 +49,6 @@ const userSchema = new mongoose.Schema(
         workRole : {
             type : [String]
         },
-        friend : [
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : 'User'
-            }
-        ],
-        hackathonsParticipated : [
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Hackathon"
-            },
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Team"
-            }
-        ],
-        hackathonsWon : [
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Hackathon"
-            },
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Team"
-            }
-        ],
-        currentHackathons : [
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Hackathon"
-            },
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Team"
-            }
-        ],
         refreshToken : {
             type : String
         }
