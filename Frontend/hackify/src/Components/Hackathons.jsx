@@ -103,8 +103,10 @@ const HackathonsPage = () => {
 
   return (
     <>
-      <Navbar/>
-      <div  style={{ padding: '20px', backgroundColor: '#f9f9f9', backgroundColor : theme.backgroundColor }}>
+      {/* <Navbar/> */}
+      <Navbar style={{ boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }} /> 
+
+      <div style={{ padding: '20px', backgroundColor: '#f9f9f9' }}>
         <Box
           sx={{
             background: 'linear-gradient(90deg, #ffb300, #ffc107, #ff9800)',

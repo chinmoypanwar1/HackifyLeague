@@ -7,15 +7,15 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 
 const sampleProjects = [
-  { id: 1, title: 'AI Art Generator', description: 'Create stunning artwork using artificial intelligence.', image: 'https://via.placeholder.com/150', likes: 42, comments: 15, tags: ['AI', 'Art'], username: 'creator1' },
-  { id: 2, title: 'Weather Tracker', description: 'Real-time weather tracking for cities worldwide.', image: 'https://via.placeholder.com/150', likes: 28, comments: 9, tags: ['Weather', 'API'], username: 'creator2' },
-  { id: 3, title: 'Crypto Dashboard', description: 'Stay updated on cryptocurrency market trends.', image: 'https://via.placeholder.com/150', likes: 55, comments: 22, tags: ['Crypto', 'Finance'], username: 'creator3' },
-  { id: 4, title: 'Recipe Finder', description: 'Find recipes based on ingredients you have.', image: 'https://via.placeholder.com/150', likes: 34, comments: 12, tags: ['Food', 'Recipes'], username: 'creator4' },
-  { id: 5, title: 'Task Manager', description: 'Organize and track your daily tasks efficiently.', image: 'https://via.placeholder.com/150', likes: 40, comments: 18, tags: ['Productivity', 'Tasks'], username: 'creator5' },
-  { id: 6, title: 'Fitness Tracker', description: 'Monitor your fitness activities and progress.', image: 'https://via.placeholder.com/150', likes: 37, comments: 20, tags: ['Fitness', 'Health'], username: 'creator6' },
-  { id: 7, title: 'Movie Recommendations', description: 'Get personalized movie recommendations.', image: 'https://via.placeholder.com/150', likes: 63, comments: 25, tags: ['Movies', 'Entertainment'], username: 'creator7' },
-  { id: 8, title: 'Budget Tracker', description: 'Track your expenses and manage your budget.', image: 'https://via.placeholder.com/150', likes: 45, comments: 14, tags: ['Finance', 'Budgeting'], username: 'creator8' },
-  { id: 9, title: 'Language Learner', description: 'Learn new languages with interactive lessons.', image: 'https://via.placeholder.com/150', likes: 52, comments: 19, tags: ['Education', 'Language'], username: 'creator9' },
+  { id: 1, title: 'AI Art Generator', description: 'Create stunning artwork using artificial intelligence.', image: 'https://www.pcworld.com/wp-content/uploads/2023/04/Power-of-art-upscale-4.jpg?quality=50&strip=all', likes: 42, comments: 15, tags: ['AI', 'Art'], username: 'creator1' },
+  { id: 2, title: 'Weather Tracker', description: 'Real-time weather tracking for cities worldwide.', image: 'https://wallpapers.com/images/featured/weather-xqhs9axpy8btfd3y.jpg', likes: 28, comments: 9, tags: ['Weather', 'API'], username: 'creator2' },
+  { id: 3, title: 'Crypto Dashboard', description: 'Stay updated on cryptocurrency market trends.', image: 'https://img.freepik.com/free-vector/admin-dashboard-panel-with-gradient-style_23-2147870229.jpghttps://img.freepik.com/free-photo/cyberpunk-bitcoin-illustration_23-2151611161.jpg', likes: 55, comments: 22, tags: ['Crypto', 'Finance'], username: 'creator3' },
+  { id: 4, title: 'Recipe Finder', description: 'Find recipes based on ingredients you have.', image: 'https://clubmahindra.gumlet.io/blog/media/section_images/littichokh-f5272d4bd8f5921.jpg?w=376&dpr=2.6', likes: 34, comments: 12, tags: ['Food', 'Recipes'], username: 'creator4' },
+  { id: 5, title: 'Task Manager', description: 'Organize and track your daily tasks efficiently.', image: 'https://img.freepik.com/free-vector/hand-drawn-flat-design-business-planning-concept_23-2149201593.jpg?uid=R140040055&ga=GA1.1.1153996981.1709355982&semt=ais_hybrid', likes: 40, comments: 18, tags: ['Productivity', 'Tasks'], username: 'creator5' },
+  { id: 6, title: 'Fitness Tracker', description: 'Monitor your fitness activities and progress.', image: 'https://img.freepik.com/free-photo/woman-checking-watch-medium-shot_23-2148889632.jpg?uid=R140040055&ga=GA1.1.1153996981.1709355982', likes: 37, comments: 20, tags: ['Fitness', 'Health'], username: 'creator6' },
+  { id: 7, title: 'Movie Recommendations', description: 'Get personalized movie recommendations.', image: 'https://img.freepik.com/free-photo/popcorn-box-with-cinema-sign_23-2148115282.jpg?uid=R140040055&ga=GA1.1.1153996981.1709355982', likes: 63, comments: 25, tags: ['Movies', 'Entertainment'], username: 'creator7' },
+  { id: 8, title: 'Budget Tracker', description: 'Track your expenses and manage your budget.', image: 'https://img.freepik.com/premium-photo/isometric-digital-workspace-modern-web-hosting-task-management-visualized-tech-presentations_38013-29395.jpg', likes: 45, comments: 14, tags: ['Finance', 'Budgeting'], username: 'creator8' },
+  { id: 9, title: 'Language Learner', description: 'Learn new languages with interactive lessons.', image: 'https://img.freepik.com/free-photo/pretty-asian-teacher-smiling-camera-back-classroom-elementary-school-vintage-effect-style-pictures_1253-1133.jpg?uid=R140040055&ga=GA1.1.1153996981.1709355982', likes: 52, comments: 19, tags: ['Education', 'Language'], username: 'creator9' },
 ];
 
 const ProjectsPage = () => {
@@ -50,27 +50,27 @@ const ProjectsPage = () => {
 
   return (
     <>
-      <Navbar />
-      <Box padding={3} textAlign="center" sx={{ width: '70%', margin: 'auto' }}>
-        <Typography variant="h4" gutterBottom style={{ fontWeight: 'bold' }}>Projects</Typography>
-        
-        <Box 
-          width="90%"
-          height="10vh"
-          margin="auto"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
+      {/* <Navbar /> */}
+      <Navbar style={{ boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }} />
+
+        <Box
           sx={{
-            background: 'linear-gradient(to right, #ffc107, #ffeb3b)',
-            borderRadius: '8px',
-            marginBottom: '16px'
+            background: 'linear-gradient(90deg, #ffb300, #ffc107, #ff9800)', // Enhanced gradient
+            padding: '40px 20px', 
+            borderRadius: '10px', 
+            marginBottom: '40px',
+            marginTop: '10px',
+            margin: '20px 20px' ,
           }}
         >
-          <Typography variant="subtitle1" color="textSecondary">
-            Explore amazing projects created by talented developers
+          <Typography variant="h4" align="center" gutterBottom style={{ color: 'black', fontWeight: 'bold' }}>
+            See the best Projects by best developers
           </Typography>
         </Box>
+
+      <Box padding={3} textAlign="center" sx={{ width: '70%', margin: 'auto' }}>
+        
+
         
         <Box display="flex" justifyContent="center" alignItems="center" mb={3}>
           <TextField
@@ -84,7 +84,7 @@ const ProjectsPage = () => {
             variant="contained"
             style={{
               backgroundColor: '#ffc107',
-              color: 'white',
+              color: 'black',
               fontWeight: 'bold',
               height: '56px', // Matching TextField height
               display: 'flex',
