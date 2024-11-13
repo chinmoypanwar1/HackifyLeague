@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
+import { useContext  } from 'react';
+import ThemeContext from '../Context/ThemeContext';
+import Footer from './Footer';
 import {
   Card,
   CardContent,
@@ -96,6 +99,8 @@ const HackathonsPage = () => {
     setSelectedHackathon(null);
   };
 
+  const { theme , isDark } = useContext(ThemeContext);
+
   return (
     <>
       {/* <Navbar/> */}
@@ -104,7 +109,7 @@ const HackathonsPage = () => {
       <div style={{ padding: '20px', backgroundColor: '#f9f9f9' }}>
         <Box
           sx={{
-            background: 'linear-gradient(90deg, #ffb300, #ffc107, #ff9800)', // Enhanced gradient
+            background: 'linear-gradient(90deg, #ffb300, #ffc107, #ff9800)',
             padding: '40px 20px', 
             borderRadius: '10px', 
             marginBottom: '40px',
@@ -159,9 +164,10 @@ const HackathonsPage = () => {
                 style={{
                   display: 'flex', // To place the content and image side by side
                   padding: '20px',
-                  backgroundColor: 'white',
+                  backgroundColor: isDark ? '#343a40' : 'white',
+                  color : theme.color,
                   borderRadius: '8px',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                  boxShadow:  isDark ? '0 4px 12px rgba(0 , 0 , 0 , 0.1)' : '0 4px 12px rgba(0, 0, 0, 0.1)' 
                 }}
               >
                 <CardMedia
@@ -178,36 +184,36 @@ const HackathonsPage = () => {
                   }}
                 />
                 <CardContent style={{ flex: 1 }}>
-                  <Typography variant="h5" gutterBottom style={{ color: 'black' }}>{hackathon.title}</Typography>
-                  <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
+                  <Typography variant="h5" gutterBottom style={{ color : theme.color, }}>{hackathon.title}</Typography>
+                  <Typography variant="body2" color="textSecondary" style={{ color : theme.color, }}>
                     Organized by {hackathon.organizer}
                   </Typography>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <School style={{ marginRight: '8px', color: '#ffc107' }} />
-                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
+                      <Typography variant="body2" color="textSecondary" style={{color : theme.color, }}>
                         Eligibility: {hackathon.eligibility}
                       </Typography>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <CalendarToday style={{ marginRight: '8px', color: '#ffc107' }} />
-                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
+                      <Typography variant="body2" color="textSecondary" style={{ color : theme.color,}}>
                         Date: {hackathon.date}
                       </Typography>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <Group style={{ marginRight: '8px', color: '#ffc107' }} />
-                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
+                      <Typography variant="body2" color="textSecondary" style={{ color : theme.color, }}>
                         Participants: {hackathon.participants}
                       </Typography>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <EmojiEvents style={{ marginRight: '8px', color: '#ffc107' }} />
-                      <Typography variant="body2" color="textSecondary" style={{ color: 'black' }}>
+                      <Typography variant="body2" color="textSecondary" style={{ color : theme.color, }}>
                         Prizes: {hackathon.prizes}
                       </Typography>
                     </div>
@@ -219,12 +225,12 @@ const HackathonsPage = () => {
                     color="primary"
                     sx={{
                       marginTop: '15px',
-                      borderColor: '#ffc107', // Set the outline color to #ffc107
+                      borderColor: '#ffc107', 
                       '&:hover': {
-                        borderColor: '#ffc107', // Ensure the outline color stays the same on hover
-                        color: '#ffc107', // Optionally, change text color on hover to match the outline
+                        borderColor: '#ffc107',
+                        color: '#ffc107',
                       },
-                      color : '#000'
+                      color : theme.color,
                     }}
                   >
                       View More
@@ -252,6 +258,7 @@ const HackathonsPage = () => {
           </Dialog>
         )}
       </div>
+      <Footer/>
     </>
   );
 };

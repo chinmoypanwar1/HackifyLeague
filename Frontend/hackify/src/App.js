@@ -9,6 +9,9 @@ import Profile from './Components/Profile';
 import ForgotPassword from './Components/Forgotpassword';
 import Resetpassword from './Components/Resetpassword';
 import HackathonsPage from './Components/Hackathons';
+
+import Organiser from './Components/Organiser';
+
 import ProjectsPage from './Components/ProjectsPage';
 function App() {
   const [authenticated , setAuthenticated] = useState(false);
@@ -21,6 +24,7 @@ function App() {
         <Route path="/about" element={<About/>} /> 
         <Route path="/projects" element={<ProjectsPage/>} /> 
         <Route path="/hackathons" element={<HackathonsPage/>} /> 
+        <Route path="/admin" element={<Organiser/>} /> 
         <Route path="/forgotpassword" element={<ForgotPassword/>} /> 
         <Route path="/resetPassword/:resetToken" element={<Resetpassword/>} /> 
       </Routes>

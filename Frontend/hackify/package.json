@@ -20,7 +20,11 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
     "tailwind-merge": "^2.5.4",
+=======
+    "styled-components": "^6.1.13",
+>>>>>>> 3e862adeb5e69c8e06d80599ce9639d60d666b7b
     "web-vitals": "^2.1.4"
   },
   "scripts": {
