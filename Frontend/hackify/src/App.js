@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 //components
 import Login from './Components/Login'
 import About from './Components/About'
@@ -9,10 +8,11 @@ import Profile from './Components/Profile';
 import ForgotPassword from './Components/Forgotpassword';
 import Resetpassword from './Components/Resetpassword';
 import HackathonsPage from './Components/Hackathons';
-
 import Organiser from './Components/Organiser';
-
 import ProjectsPage from './Components/ProjectsPage';
+import HackathonDetails from './Components/HackathonDetails';
+import Contact from './Components/Contact';
+
 function App() {
   const [authenticated , setAuthenticated] = useState(false);
   return (
@@ -22,8 +22,10 @@ function App() {
         <Route path="/" element={<Home authenticated = {authenticated}  setAuthenticated = {setAuthenticated}/>} /> 
         <Route path="/profile" element={<Profile/>} /> 
         <Route path="/about" element={<About/>} /> 
+        <Route path="/contact" element={<Contact/>} /> 
         <Route path="/projects" element={<ProjectsPage/>} /> 
         <Route path="/hackathons" element={<HackathonsPage/>} /> 
+        <Route path="/hackathons/:hackathonId" element={<HackathonDetails/>} /> 
         <Route path="/admin" element={<Organiser/>} /> 
         <Route path="/forgotpassword" element={<ForgotPassword/>} /> 
         <Route path="/resetPassword/:resetToken" element={<Resetpassword/>} /> 
