@@ -31,8 +31,8 @@ const teamSchema = new mongoose.Schema(
       required: true,
     },
     project: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Project",
+      type: String,
+      unique : true
     },
     teamMemberLimit: {
       type: Number,

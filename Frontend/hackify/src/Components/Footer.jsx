@@ -1,65 +1,104 @@
-import React , {useContext} from 'react';
+import React, { useContext } from 'react';
 import ThemeContext from '../Context/ThemeContext';
 import { Container, Typography, Box, Grid, Link, Divider } from '@mui/material';
 
 const Footer = () => {
-  const {theme}  = useContext(ThemeContext);
-  return (
-    <Box sx={{ backgroundColor : theme.backgroundColor , color : theme.color }}> {/* Reduced padding to 2 */}
-      <Container maxWidth="lg">
-        <Grid container spacing={4}>
-          
-          {/* Protfolio Section */}
+  const { theme, isDark } = useContext(ThemeContext);
 
-          <Grid item xs={12} sm={4}>
+  return (
+    <Box
+      sx={{
+        backgroundColor: isDark ? '#353b3f' : '#f5f5f5', 
+        color: theme.color,
+        padding: '40px 0', // Increase height by adding padding
+      }}
+    >
+      <Container maxWidth="xl"> {/* Wider container for full page width */}
+        <Grid container spacing={4} justifyContent="space-around">
+          {/* Portfolio Section */}
+          <Grid item xs={12} sm={4} md={4} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
               Portfolio
             </Typography>
-            <Link href="#" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              Your Projects
-            </Link>
-            <Link href="#" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              Your Hackathons
-            </Link>
-            <Link href="#" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              Settings
-            </Link>
+            {['Your Projects', 'Your Hackathons', 'Settings'].map((text) => (
+              <Link
+                href="#"
+                color="inherit"
+                variant="body2"
+                key={text}
+                sx={{
+                  display: 'block',
+                  mt: 1,
+                  textDecoration: 'none', // Remove underline
+                  transition: 'color 0.3s', // Smooth color transition
+                  '&:hover': {
+                    color: '#ffc107', // Change color on hover
+                  },
+                }}
+              >
+                {text}
+              </Link>
+            ))}
           </Grid>
 
           {/* Resources Section */}
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} md={4} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
               Resources
             </Typography>
-            <Link href="#" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              Help Center
-            </Link>
-            <Link href="#" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              Terms of Service
-            </Link>
-            <Link href="#" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              Privacy Policy
-            </Link>
+            {['Help Center', 'Terms of Service', 'Privacy Policy'].map((text) => (
+              <Link
+                href="#"
+                color="inherit"
+                variant="body2"
+                key={text}
+                sx={{
+                  display: 'block',
+                  mt: 1,
+                  textDecoration: 'none',
+                  transition: 'color 0.3s',
+                  '&:hover': {
+                    color: '#ffc107',
+                  },
+                }}
+              >
+                {text}
+              </Link>
+            ))}
           </Grid>
 
           {/* Connect Section */}
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} md={4} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
               Connect
             </Typography>
-            <Link href="https://twitter.com" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              Twitter
-            </Link>
-            <Link href="https://linkedin.com" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              LinkedIn
-            </Link>
-            <Link href="https://github.com" color="inherit" variant="body2" sx={{ display: 'block', mt: 1 }}>
-              GitHub
-            </Link>
+            {[
+              { text: 'Twitter', url: 'https://twitter.com' },
+              { text: 'LinkedIn', url: 'https://linkedin.com' },
+              { text: 'GitHub', url: 'https://github.com' },
+            ].map((item) => (
+              <Link
+                href={item.url}
+                color="inherit"
+                variant="body2"
+                key={item.text}
+                sx={{
+                  display: 'block',
+                  mt: 1,
+                  textDecoration: 'none',
+                  transition: 'color 0.3s',
+                  '&:hover': {
+                    color: '#ffc107',
+                  },
+                }}
+              >
+                {item.text}
+              </Link>
+            ))}
           </Grid>
         </Grid>
 
-        <Divider sx={{ my: 2, bgcolor: 'white' }} /> {/* Reduced margin to decrease space */}
+        <Divider sx={{ my: 3, bgcolor: theme.color }} /> {/* Divider color to match the theme */}
 
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="body2">

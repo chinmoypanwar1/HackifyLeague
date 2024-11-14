@@ -1,4 +1,13 @@
 /** @type {import('tailwindcss').Config} */
+<<<<<<< HEAD
+export default {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@aceternity/ui/**/*.{js,ts,jsx,tsx}", // Add this line for Aceternity components
+  ],
+  theme: {
+    extend: {},
+=======
 export default{
   content: ["./src/**/*.{html,js,jsx}"],
   darkMode: "class",
@@ -19,6 +28,7 @@ export default{
         },
       },
     },
+>>>>>>> ffceaa522611f7c6aed36909b0f40577eb138b55
   },
   plugins: [],
 }
