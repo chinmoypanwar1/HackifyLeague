@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import ThemeContextProvider from './Context/ThemeContextProvider';
+import ReminderContextProvider from './Context/ReminderContextProvider';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <ReminderContextProvider>
     <ThemeContextProvider>
       <App />
     </ThemeContextProvider>
+    </ReminderContextProvider>
   </React.StrictMode>
 );
 

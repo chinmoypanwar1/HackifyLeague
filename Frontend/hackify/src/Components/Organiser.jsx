@@ -1,4 +1,3 @@
-import { CleaningServices } from '@mui/icons-material';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -37,12 +36,12 @@ const HeroButton = styled.button`
   }
 `;
 
-const CardContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
-`;
+// const CardContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   gap: 2rem;
+//   margin-top: 2rem;
+// `;
 
 const Card = styled.div`
   background-color: #007bff; /* Replaced props.theme.colors.buttonBackground */

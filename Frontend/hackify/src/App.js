@@ -12,6 +12,7 @@ import Organiser from './Components/Organiser';
 import ProjectsPage from './Components/ProjectsPage';
 import HackathonDetails from './Components/HackathonDetails';
 import Contact from './Components/Contact';
+import Reminders from './Components/Reminders';
 
 function App() {
   const [authenticated , setAuthenticated] = useState(false);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/contact" element={<Contact/>} /> 
         <Route path="/projects" element={<ProjectsPage/>} /> 
         <Route path="/hackathons" element={<HackathonsPage/>} /> 
+        <Route path="/reminders" element={<Reminders/>} /> 
         <Route path="/hackathons/:hackathonId" element={<HackathonDetails/>} /> 
         <Route path="/admin" element={<Organiser/>} /> 
         <Route path="/forgotpassword" element={<ForgotPassword/>} /> 

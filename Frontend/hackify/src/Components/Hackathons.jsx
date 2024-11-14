@@ -17,7 +17,6 @@ import {
   Box,
   CardMedia,
   Checkbox,
-  filters,
   FormControlLabel,
   FormGroup,
   MenuItem,
@@ -162,7 +161,7 @@ const HackathonsPage = () => {
   return (
     <>
       <Navbar/>
-      <div  style={{ display: 'flex', padding: '20px', backgroundColor: '#f9f9f9', backgroundColor : theme.backgroundColor }}>
+      <div  style={{ display: 'flex', padding: '20px', backgroundColor : theme.backgroundColor }}>
 
         <div style={{ flex: 1 }}>
           <Box
