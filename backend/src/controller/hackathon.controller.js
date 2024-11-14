@@ -274,8 +274,6 @@ const searchHackathon = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, 'Hackathon results fetched successfully.', hackathons));
 });
 
-export default searchHackathon;
-
 export {
 	createHackathon,
 	getHackathons,

@@ -215,7 +215,7 @@ const HackathonsPage = () => {
           </div>
           <div className="problem" style = {{display : 'flex' , flexDirection : 'row'}}>
             {/* sidebar */}
-              <Box sx={{ width: 400, backgroundColor: isDark ? '#202428' : '#f5f5f5', color : theme.color , padding: 2, borderRadius: 2, marginLeft: '10vmin' }}>
+              <Box sx={{ width: 400, backgroundColor: isDark ? '#343a40' : '#f5f5f5', color : theme.color , padding: 2, borderRadius: 2, marginLeft: '10vmin' }}>
               <FormControlLabel
                 control={<Checkbox checked={filters.eligibility} onChange={() => handleMainCheckboxChange('eligibility')} />}
                 label="Match my eligibility"
