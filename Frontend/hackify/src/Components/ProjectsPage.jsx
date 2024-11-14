@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState , useContext } from 'react';
 import { Grid, Card, CardContent, CardMedia, Typography, TextField, IconButton, Button, Box } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import SearchIcon from '@mui/icons-material/Search';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ThemeContext from '../Context/ThemeContext';
 
 const sampleProjects = [
   { id: 1, title: 'AI Art Generator', description: 'Create stunning artwork using artificial intelligence.', image: 'https://www.pcworld.com/wp-content/uploads/2023/04/Power-of-art-upscale-4.jpg?quality=50&strip=all', likes: 42, comments: 15, tags: ['AI', 'Art'], username: 'creator1' },
@@ -22,6 +23,8 @@ const ProjectsPage = () => {
   const [projects, setProjects] = useState(sampleProjects);
   const [searchQuery, setSearchQuery] = useState('');
   const [likedProjects, setLikedProjects] = useState({});
+
+  const { theme } = useContext(ThemeContext);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value.toLowerCase());
@@ -52,7 +55,7 @@ const ProjectsPage = () => {
     <>
       {/* <Navbar /> */}
       <Navbar style={{ boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }} />
-
+        
         <Box
           sx={{
             background: 'linear-gradient(90deg, #ffb300, #ffc107, #ff9800)', // Enhanced gradient
@@ -132,6 +135,7 @@ const ProjectsPage = () => {
           ))}
         </Grid>
       </Box>
+  
       <Footer />
     </>
   );
