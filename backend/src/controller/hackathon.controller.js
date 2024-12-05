@@ -5,7 +5,6 @@ import { ApiResponse } from '../utils/ApiResponse.js'
 import { ApiError } from '../utils/apiError.js'
 
 const createHackathon = asyncHandler(async (req, res) => {
-
 	const {
 		displayName,
 		host,
@@ -13,14 +12,14 @@ const createHackathon = asyncHandler(async (req, res) => {
 		teamMemberLimit,
 		description,
 		location,
-		companyLink,
-		sponsorLink,
 		prizePool,
 		tags,
 		startDate,
 		endDate,
-		RegistrationDeadline,
+		RegistrationDeadline
 	} = req.body
+
+	console.log(req.body);
 
 	if (
 		!displayName.trim() ||
@@ -28,8 +27,6 @@ const createHackathon = asyncHandler(async (req, res) => {
 		!teamMemberLimit ||
 		!description ||
 		!location ||
-		!companyLink ||
-		!sponsorLink ||
 		!prizePool ||
 		!startDate ||
 		!endDate ||
@@ -62,40 +59,29 @@ const createHackathon = asyncHandler(async (req, res) => {
 	if (RegistrationDeadline >= endDate) {
 		throw new ApiError(400, 'Registration deadline must be before end date')
 	}
-	let hostUser = []
-
-	for (let i = 0; i < host.length; i++) {
-		const existingUser = await User.findOne({ username: host[i] })
-		if (!existingUser) {
-			throw new ApiError(400, 'Please provide a valid host.')
-		}
-		hostUser.push(existingUser._id)
-	}
 
 	const existedHackathon = await Hackathon.findOne({ displayName })
 	if (existedHackathon) {
 		throw new ApiError(400, 'The hackathon with a similar name already exists.')
 	}
 
+	const arrayTags = tags.split(" ");
+
 	const hackathon = await Hackathon.create({
 		displayName,
-		host: [],
+		host,
 		limit,
 		teamMemberLimit,
 		description,
 		location,
-		companyLink,
-		sponsorLink,
 		prizePool,
-		tags,
+		tags : arrayTags,
 		startDate,
 		endDate,
 		RegistrationDeadline,
 	})
 
 	console.log(hackathon)
-
-	hackathon.host = hostUser
 	hackathon.save()
 
 	console.log(hackathon)
@@ -106,20 +92,14 @@ const createHackathon = asyncHandler(async (req, res) => {
 })
 
 const getHackathons = asyncHandler(async (req, res) => {
-	const { page = 1, limit = 10 } = req.query
+    const hackathons = await Hackathon.find();
 
-	const hackathons = await Hackathon.find({
-		RegistrationDeadline: { $gte: Date.now() },
-	})
-		.sort({ RegistrationDeadline: 1 })
-		.skip((page - 1) * limit)
-		.limit(Number(limit))
-		.select('displayName limit teamMemberLimit location prizePool')
+	console.log(hackathons)
 
-	return res
-		.status(200)
-		.json(new ApiResponse(200, 'Hackathons fetched successfully', hackathons))
-})
+    return res
+        .status(200)
+        .json(new ApiResponse(200, 'Hackathons fetched successfully', hackathons));
+});
 
 const getHackathonById = asyncHandler(async (req, res) => {
 	const { hackathonId } = req.params
@@ -164,7 +144,7 @@ const updateHackathonDetails = asyncHandler(async (req, res) => {
 		throw new ApiError(404, 'Please provide a valid hackathon Id')
 	}
 
-    // Check if user is host or not
+	// Check if user is host or not
 	let isHost = hackathon.host.some((hostId) => hostId.equals(user._id))
 	if (!isHost) {
 		throw new ApiError(400, 'You are not an admin.')
@@ -248,36 +228,38 @@ const updateHackathonDetails = asyncHandler(async (req, res) => {
 })
 
 const searchHackathon = asyncHandler(async (req, res) => {
-    const { displayName } = req.body;
-    if (typeof displayName !== 'string' || displayName.trim() === '') {
-        throw new ApiError(400, 'Please insert a valid display name.');
-    }
+	const { displayName } = req.body
+	if (typeof displayName !== 'string' || displayName.trim() === '') {
+		throw new ApiError(400, 'Please insert a valid display name.')
+	}
 
-    await Hackathon.createIndexes({
-        displayName: 'text',
-    });
+	await Hackathon.createIndexes({
+		displayName: 'text',
+	})
 
-    const hackathons = await Hackathon.find(
-        {
-            $text: { $search: displayName },
-        },
-        {
-            score: { $meta: 'textScore' },
-        }
-    )
-        .select('displayName _id')
-        .sort({ score: { $meta: 'textScore' } })
-        .limit(10);
+	const hackathons = await Hackathon.find(
+		{
+			$text: { $search: displayName },
+		},
+		{
+			score: { $meta: 'textScore' },
+		}
+	)
+		.select('displayName _id')
+		.sort({ score: { $meta: 'textScore' } })
+		.limit(10)
 
-    return res
-        .status(200)
-        .json(new ApiResponse(200, 'Hackathon results fetched successfully.', hackathons));
-});
+	return res
+		.status(200)
+		.json(
+			new ApiResponse(200, 'Hackathon Data Fetched Successfully', hackathons)
+		)
+})
 
 export {
 	createHackathon,
 	getHackathons,
 	getHackathonById,
 	updateHackathonDetails,
-    searchHackathon
+	searchHackathon,
 }

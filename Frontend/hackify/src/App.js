@@ -9,11 +9,15 @@ import Profile from './Components/Profile';
 import ForgotPassword from './Components/Forgotpassword';
 import Resetpassword from './Components/Resetpassword';
 import HackathonsPage from './Components/Hackathons';
-import Organiser from './Components/AdminPage';
+// import Organiser from './Components/AdminPage';
 import ProjectsPage from './Components/ProjectsPage';
 import HackathonDetails from './Components/HackathonDetails';
 import Contact from './Components/Contact';
 import Reminders from './Components/Reminders';
+import AdminPage from './Components/AdminPage';
+import HostHackathonForm from "./Components/HostHackathonPage"
+import CreateTeam from './Components/CreateTeam';
+import Team from './Components/Team';
 
 function App() {
   const [authenticated , setAuthenticated] = useState(false);
@@ -27,23 +31,20 @@ function App() {
         <Route path="/contact" element={<Contact/>} /> 
         <Route path="/projects" element={<ProjectsPage/>} /> 
         <Route path="/hackathons" element={<HackathonsPage/>} /> 
-<<<<<<< HEAD
-        <Route path="/reminders" element={<Reminders/>} /> 
-=======
         <Route path="/admin" element={<AdminPage/>} /> 
         <Route path="/host-public-hackathon" element={<HostHackathonForm/>} /> 
         <Route path="/host-internal-hackathon" element={<HostHackathonForm/>} /> 
-        
->>>>>>> 4a7ec5b867a065c9e2169972b8e2c56a4be59802
         <Route path="/hackathons/:hackathonId" element={<HackathonDetails/>} /> 
+        <Route path='/reminders' element={<Reminders/>} />
         {/* <Route path="/admin" element={<AdminPage/>} />  */}
         <Route path="/forgotpassword" element={<ForgotPassword/>} /> 
         <Route path="/resetPassword/:resetToken" element={<Resetpassword/>} /> 
+        <Route path='/hackathons/:hackathonId/createTeam' element={<CreateTeam/>} />
+        <Route path='/teams/:teamId' element={<Team/>} />
 
         {/* <Route exact path="/" component={AdminPage} /> */}
         {/* <Route path="/host-public-hackathon" component={HostHackathonForm} />
         <Route path="/host-internal-hackathon" component={HostHackathonForm} /> */}
-            
       </Routes>
     </Router>
   );

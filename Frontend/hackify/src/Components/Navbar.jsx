@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import ThemeContext from '../Context/ThemeContext';
+import logo from '../Assets/Images/logo.png'; // Adjust path if needed
 
 const Navbar = ({ authenticated }) => {
   const navigate = useNavigate();
@@ -28,7 +29,12 @@ const Navbar = ({ authenticated }) => {
             marginLeft: '5vmin',
           }}
         >
-          Hackify
+          <img
+            src={logo}
+            
+            alt="Hackify Logo"
+            style={{ height: '70px', width: 'auto' }}
+          />
         </a>
 
         <div className="navbar-center">

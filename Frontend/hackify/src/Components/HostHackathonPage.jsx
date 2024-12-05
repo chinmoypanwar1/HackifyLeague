@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Container } from '@mui/material';
+import axios from "axios"
 
 function HostHackathonForm() {
     const [formData, setFormData] = useState({
-        name: '',
+        displayName: '',
         description: '',
         startDate: '',
         endDate: '',
-        type: '' // Public or Internal
+        RegistrationDeadline : '',
+        tags: '',
+        limit : 0,
+        prizePool : 0,
+        host : '',
+        teamMemberLimit : 0,
+        location : ''
     });
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle form submission, like sending data to server
-        console.log(formData);
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault();
+            console.log(formData);
+            const response = await axios.post("http://localhost:8080/api/v1/hackathons/createHackathon", formData);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error.message)
+        }
     };
 
     return (
@@ -29,8 +41,8 @@ function HostHackathonForm() {
                 <TextField
                     fullWidth
                     label="Hackathon Name"
-                    name="name"
-                    value={formData.name}
+                    name="displayName"
+                    value={formData.displayName}
                     onChange={handleChange}
                     margin="normal"
                     variant="outlined"
@@ -70,8 +82,76 @@ function HostHackathonForm() {
                 />
                 <TextField
                     fullWidth
-                    label="Hackathon Type (Public/Internal)"
-                    name="type"
+                    label="Registration Deadline"
+                    name="RegistrationDeadline"
+                    type="date"
+                    value={formData.RegistrationDeadline}
+                    onChange={handleChange}
+                    margin="normal"
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                />
+                <TextField
+                    fullWidth
+                    label="Limit"
+                    name="limit"
+                    type="number"
+                    value={formData.limit}
+                    onChange={handleChange}
+                    margin="normal"
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                />
+                <TextField
+                    fullWidth
+                    label="Prize Pool"
+                    name="prizePool"
+                    type="number"
+                    value={formData.prizePool}
+                    onChange={handleChange}
+                    margin="normal"
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                />
+                <TextField
+                    fullWidth
+                    label="host"
+                    name="host"
+                    type="string"
+                    value={formData.host}
+                    onChange={handleChange}
+                    placeholder='Enter host name'
+                    margin="normal"
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                />
+                <TextField
+                    fullWidth
+                    label="Team Member Limit"
+                    name="teamMemberLimit"
+                    type="number"
+                    value={formData.teamMemberLimit}
+                    onChange={handleChange}
+                    margin="normal"
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                />
+                <TextField
+                    fullWidth
+                    label="Location"
+                    name="location"
+                    type="string"
+                    value={formData.location}
+                    placeholder='Enter the location of Hackathon'
+                    onChange={handleChange}
+                    margin="normal"
+                    InputLabelProps={{ shrink: true }}
+                    variant="outlined"
+                />
+                <TextField
+                    fullWidth
+                    label="Hackathon Tags"
+                    name="tags"
                     value={formData.type}
                     onChange={handleChange}
                     margin="normal"
@@ -82,6 +162,7 @@ function HostHackathonForm() {
                     variant="contained" 
                     style={{ backgroundColor: '#ffc107', color: '#333', marginTop: '1rem' }}
                     fullWidth
+                    onClick={handleSubmit}
                 >
                     Submit
                 </Button>

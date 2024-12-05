@@ -56,14 +56,14 @@ const ProjectsPage = () => {
       {/* <Navbar /> */}
       <Navbar style={{ boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)' }} />
         
+      <Box sx={{backgroundColor : theme.backgroundColor, color : theme.color }}>
         <Box
           sx={{
             background: 'linear-gradient(90deg, #ffb300, #ffc107, #ff9800)', // Enhanced gradient
             padding: '40px 20px', 
             borderRadius: '10px', 
             marginBottom: '40px',
-            marginTop: '10px',
-            margin: '20px 20px' ,
+            margin: '0px 20px' ,
           }}
         >
           <Typography variant="h4" align="center" gutterBottom style={{ color: 'black', fontWeight: 'bold' }}>
@@ -71,10 +71,8 @@ const ProjectsPage = () => {
           </Typography>
         </Box>
 
-      <Box padding={3} textAlign="center" sx={{ width: '70%', margin: 'auto' }}>
-        
+      <Box padding={3} textAlign="center" sx={{ width: '70%', margin: 'auto' , backgroundColor : theme.backgroundColor, color : theme.color }}>
 
-        
         <Box display="flex" justifyContent="center" alignItems="center" mb={3}>
           <TextField
             label="Search Projects"
@@ -135,7 +133,7 @@ const ProjectsPage = () => {
           ))}
         </Grid>
       </Box>
-  
+    </Box>
       <Footer />
     </>
   );

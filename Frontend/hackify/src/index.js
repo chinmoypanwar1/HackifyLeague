@@ -4,17 +4,18 @@ import './index.css';
 import App from './App';
 import ThemeContextProvider from './Context/ThemeContextProvider';
 import ReminderContextProvider from './Context/ReminderContextProvider';
+import UserContextProvider from './Context/UserContextProvider';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <UserContextProvider>
     <ReminderContextProvider>
-    <ThemeContextProvider>
-      <App />
-    </ThemeContextProvider>
+      <ThemeContextProvider>
+        <App />
+      </ThemeContextProvider>
     </ReminderContextProvider>
-  </React.StrictMode>
+  </UserContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

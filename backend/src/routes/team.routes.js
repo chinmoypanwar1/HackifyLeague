@@ -16,6 +16,6 @@ router.patch('/addMember', verifyJWT, addMemberToTeam)
 router.patch('/removeMember', verifyJWT, removeMemberfromTeam)
 router.patch('/addProjectLink', verifyJWT, addProjectLink)
 router.get('/getTeam/:teamId', verifyJWT, getTeam)
-router.get('/getTeam/:hackathonID', verifyJWT, getTeamsInHackathons)
+router.get('/getTeam/:hackathonID', verifyJWT, getTeamsInHackathon)
 
-export default router
+export default router;

@@ -7,13 +7,10 @@ const hackathonSchema = new mongoose.Schema(
       required: true,
       maxlength: 30,
     },
-    host: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      }
-    ],
+    host: {
+      type : String,
+      required : true
+    },
     limit: {
       type: Number,
       min: 50,
@@ -30,7 +27,7 @@ const hackathonSchema = new mongoose.Schema(
       required: true,
     },
     location: {
-      type: [String],
+      type: String,
       required: true,
     },
     companyLink: [

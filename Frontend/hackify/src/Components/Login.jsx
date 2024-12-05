@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Box, Container, TextField, Button, Typography} from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 // import {AnimationCircles} from '../Animation/login-bg'
 import axios from 'axios'
+import UserContext from '../Context/UserContext';
 
 const SignUpItems = styled(Container)(({ theme }) => ({
   height: 'auto',
@@ -83,6 +84,7 @@ const LoginItems = styled(Container)(({ theme }) => ({
 const Signup = ({authenticated , setAuthenticated}) => {
 
     const [loginerror , setLoginerror] = useState('');
+    const {userData, setUserData} = useContext(UserContext)
 
     //signup data
   const [formData, setFormData] = useState({

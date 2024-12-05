@@ -21,6 +21,8 @@ const createTeam = asyncHandler(async (req, res) => {
 		throw new ApiError(400, 'All fields are required')
 	}
 
+	console.log(req.body)
+
 	const hackathon = await Hackathon.findById(hackathonId)
 
 	if (!hackathon) {
@@ -79,12 +81,14 @@ const createTeam = asyncHandler(async (req, res) => {
 })
 
 const addMemberToTeam = asyncHandler(async (req, res) => {
-	const { hackathonId, userId, teamId } = req.body
+	const { hackathonId, username, teamId } = req.body
 	const user = req.user
 
-	if ([hackathonId, userId, teamId].some((field) => field?.trim() === '')) {
-		throw new ApiError(400, 'All fields are required')
-	}
+	const userId = await User.findOne({
+		username : username
+	}).select("_id")
+
+	console.log(userId)
 
 	const hackathon = await Hackathon.findById(hackathonId)
 
@@ -175,6 +179,7 @@ const addMemberToTeam = asyncHandler(async (req, res) => {
 		console.error(error)
 		throw new ApiError(500, 'Internal Server Error')
 	}
+
 })
 
 const removeMemberfromTeam = asyncHandler(async (req, res) => {
@@ -259,18 +264,39 @@ const removeMemberfromTeam = asyncHandler(async (req, res) => {
 })
 
 const getTeam = asyncHandler(async (req, res) => {
-	const teamId = req.params
-
-	const team = await Team.findById(teamId)
-
-	if (!team) {
-		throw new ApiError(404, 'Team not found. Please provide a valid ID')
+	const { teamId } = req.params;
+  
+	if (!teamId) {
+	  throw new ApiError(400, "Team ID is required");
 	}
-
+  
+	// Find the team and populate the "user" field in members
+	const team = await Team.findById(teamId).populate({
+	  path: "members.user", // Populate the user field
+	  select: "fullname",   // Select only the fullname field
+	});
+  
+	if (!team) {
+	  throw new ApiError(404, "Team not found. Please provide a valid ID");
+	}
+  
+	// Map through members to ensure populated names are present
+	const populatedMembers = team.members.map((member) => ({
+	  ...member._doc, 
+	  user: member.user?.fullname || "Unknown User", 
+	}));
+  
+	// Create a response object with updated members
+	const response = {
+	  ...team._doc, // Spread the original team object
+	  members: populatedMembers, // Replace members with populated data
+	};
+  
 	return res
-		.status(200)
-		.json(new ApiResponse(200, 'Team Data Fetched Successfully', team))
-})
+	  .status(200)
+	  .json(new ApiResponse(200, "Team Data Fetched Successfully", response));
+});
+
 
 const addProjectLink = asyncHandler(async (req, res) => {
 	const { link, teamId } = req.body

@@ -1,0 +1,45 @@
+.hackify-container {
+    height: 100vh;
+    width: 100vw;
+    font-family: "Montserrat", sans-serif;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+    font-size: 100%;
+    text-align: center;
+  }
+  
+  .criterion {
+    font-size: 1.6rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .text {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  .frame {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    opacity: 0;
+  }
+  
+  .particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+  

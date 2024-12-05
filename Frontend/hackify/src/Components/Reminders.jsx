@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReminderContext from '../Context/ReminderContext';
 import { Box, Typography, Card, CardContent, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete'; // Material-UI Delete Icon
+import DeleteIcon from '@mui/icons-material/Delete'; 
 import { styled } from '@mui/system';
-import { motion } from 'framer-motion'; // For animation
+import { motion } from 'framer-motion'; 
 import ThemeContext from '../Context/ThemeContext';
 
 const RemindersSection = styled(Box)({
@@ -22,10 +22,10 @@ const ReminderCard = styled(Card)({
   borderRadius: '10px',
   boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
   transition: 'transform 0.3s ease',
-  display: 'flex', // To arrange the title and delete button side by side
-  alignItems: 'center', // Centering the content vertically
-  position: 'relative', // For future positioning of elements
-  padding: '10px', // Adding padding for better spacing
+  display: 'flex', 
+  alignItems: 'center', 
+  position: 'relative', 
+  padding: '10px', 
   '&:hover': {
     transform: 'scale(1.05)',
   },
@@ -81,7 +81,7 @@ const Reminders = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: theme?.backgroundColor, color: theme?.color, minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: theme.backgroundColor, color: theme.color, minHeight: '100vh' }}>
       <Box sx={{ textAlign: 'center', padding: '20px' }}>
         <Typography variant="h2" gutterBottom>
           Your Reminders

@@ -123,9 +123,8 @@
 
 /* Dark Mode and Light Mode Styling */
 .dark-mode {
-  background-color: #202428;
+  background-color: #353b3f;
   color: white;
-  border-bottom: 2px solid white;
   transition: ease 0.3s;
 }
 

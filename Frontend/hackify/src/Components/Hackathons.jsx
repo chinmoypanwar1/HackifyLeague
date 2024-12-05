@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import { useContext  } from 'react';
 import ThemeContext from '../Context/ThemeContext';
@@ -26,67 +26,111 @@ import {
 } from '@mui/material';
 import { School, Group, CalendarToday, EmojiEvents, Search } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const hackathonsData = [
   {
     _id : 1,
-    title: "AI Challenge 2024",
-    organizer: "TechCorp",
-    eligibility: "All years",
-    date: "March 15 - March 17, 2024",
-    type: "AI/ML",
-    participants: 120,
-    prizes: "1st: $5000, 2nd: $3000, 3rd: $1000",
+    displayName: "AI Challenge 2024",
+    host: "TechCorp",
+    RegistrationDeadline : "18-11-2024",
+    startDate : "19-11-2024",
+    endDate : "20-11-2024",
+    tags: "AI/ML",
+    limit: 120,
+    prizePool: "1000",
     location: "Virtual",
-    duration: "48 hours",
-    details: "A competitive AI/ML hackathon focusing on image recognition and NLP challenges.",
+    description: "A competitive AI/ML hackathon focusing on image recognition and NLP challenges.",
     image: "https://img.freepik.com/free-vector/hackathon-doodle-hand-drawing-team-programmers-web-developers-managers-graphic-designers-deve_88138-1348.jpg",
   },
   {
     _id : 2,
-    title: "Blockchain Innovators",
-    organizer: "InnovateX",
-    eligibility: "Sophomores and above",
-    date: "April 10 - April 12, 2024",
-    type: "Blockchain",
-    participants: 80,
-    prizes: "1st: $4000, 2nd: $2000, 3rd: $1000",
-    location: "In-person at NY Tech Campus",
-    duration: "3 days",
-    details: "Explore blockchain applications and build secure decentralized apps.",
-    image: "https://engg.cambridge.edu.in/wp-content/uploads/2023/07/SIH.png", 
+    displayName: "AI Challenge 2024",
+    host: "TechCorp",
+    RegistrationDeadline : "18-11-2024",
+    startDate : "19-11-2024",
+    endDate : "20-11-2024",
+    tags: "AI/ML",
+    limit: 120,
+    prizePool: "1000",
+    location: "Virtual",
+    description: "A competitive AI/ML hackathon focusing on image recognition and NLP challenges.",
+    image: "https://img.freepik.com/free-vector/hackathon-doodle-hand-drawing-team-programmers-web-developers-managers-graphic-designers-deve_88138-1348.jpg",
   },
   {
     _id : 3,
-    title: "Web Dev Sprint",
-    organizer: "WebNation",
-    eligibility: "Freshers and Sophomores",
-    date: "May 20 - May 22, 2024",
-    type: "Web Development",
-    participants: 150,
-    prizes: "1st: $3000, 2nd: $1500, 3rd: $500",
-    location: "Hybrid",
-    duration: "36 hours",
-    details: "A web development hackathon focusing on innovative front-end and back-end solutions.",
-    image: "https://img.freepik.com/free-vector/hackathon-technology-infographic-with-flat-icons_88138-961.jpg", 
+    displayName: "AI Challenge 2024",
+    host: "TechCorp",
+    RegistrationDeadline : "18-11-2024",
+    startDate : "19-11-2024",
+    endDate : "20-11-2024",
+    tags: "AI/ML",
+    limit: 120,
+    prizePool: "1000",
+    location: "Virtual",
+    description: "A competitive AI/ML hackathon focusing on image recognition and NLP challenges.",
+    image: "https://img.freepik.com/free-vector/hackathon-doodle-hand-drawing-team-programmers-web-developers-managers-graphic-designers-deve_88138-1348.jpg",
   },
   {
-    _id: 4,
-    title: "Web Dev Sprint",
-    organizer: "WebNation",
-    eligibility: "Freshers and Sophomores",
-    date: "May 20 - May 22, 2024",
-    type: "Web Development",
-    participants: 150,
-    prizes: "1st: $3000, 2nd: $1500, 3rd: $500",
-    location: "Hybrid",
-    duration: "36 hours",
-    details: "A web development hackathon focusing on innovative front-end and back-end solutions.",
-    image: "https://media.istockphoto.com/id/1210803911/id/vektor/orang-orang-bekerja-sama-hackathon-vector-ilustrasi-datar-programmer-bekerja-dengan-data.jpg?s=612x612&w=0&k=20&c=JtHeIt4ZcvkgLat3mAkRmp_IAq6t1vtyTAEcHDvE9w4=", 
-  },
+    _id : 4,
+    displayName: "AI Challenge 2024",
+    host: "TechCorp",
+    RegistrationDeadline : "18-11-2024",
+    startDate : "19-11-2024",
+    endDate : "20-11-2024",
+    tags: "AI/ML",
+    limit: 120,
+    prizePool: "1000",
+    location: "Virtual",
+    description: "A competitive AI/ML hackathon focusing on image recognition and NLP challenges.",
+    image: "https://img.freepik.com/free-vector/hackathon-doodle-hand-drawing-team-programmers-web-developers-managers-graphic-designers-deve_88138-1348.jpg",
+  }
+  // {
+  //   _id : 2,
+  //   title: "Blockchain Innovators",
+  //   organizer: "InnovateX",
+  //   eligibility: "Sophomores and above",
+  //   date: "April 10 - April 12, 2024",
+  //   type: "Blockchain",
+  //   participants: 80,
+  //   prizes: "1st: $4000, 2nd: $2000, 3rd: $1000",
+  //   location: "In-person at NY Tech Campus",
+  //   duration: "3 days",
+  //   details: "Explore blockchain applications and build secure decentralized apps.",
+  //   image: "https://engg.cambridge.edu.in/wp-content/uploads/2023/07/SIH.png", 
+  // },
+  // {
+  //   _id : 3,
+  //   title: "Web Dev Sprint",
+  //   organizer: "WebNation",
+  //   eligibility: "Freshers and Sophomores",
+  //   date: "May 20 - May 22, 2024",
+  //   type: "Web Development",
+  //   participants: 150,
+  //   prizes: "1st: $3000, 2nd: $1500, 3rd: $500",
+  //   location: "Hybrid",
+  //   duration: "36 hours",
+  //   details: "A web development hackathon focusing on innovative front-end and back-end solutions.",
+  //   image: "https://img.freepik.com/free-vector/hackathon-technology-infographic-with-flat-icons_88138-961.jpg", 
+  // },
+  // {
+  //   _id: 4,
+  //   title: "Web Dev Sprint",
+  //   organizer: "WebNation",
+  //   eligibility: "Freshers and Sophomores",
+  //   date: "May 20 - May 22, 2024",
+  //   type: "Web Development",
+  //   participants: 150,
+  //   prizes: "1st: $3000, 2nd: $1500, 3rd: $500",
+  //   location: "Hybrid",
+  //   duration: "36 hours",
+  //   details: "A web development hackathon focusing on innovative front-end and back-end solutions.",
+  //   image: "https://media.istockphoto.com/id/1210803911/id/vektor/orang-orang-bekerja-sama-hackathon-vector-ilustrasi-datar-programmer-bekerja-dengan-data.jpg?s=612x612&w=0&k=20&c=JtHeIt4ZcvkgLat3mAkRmp_IAq6t1vtyTAEcHDvE9w4=", 
+  // },
 ];
 
 const HackathonsPage = () => {
+  const [data, setData] = useState(null); 
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredHackathons, setFilteredHackathons] = useState(hackathonsData);
   const [selectedHackathon, setSelectedHackathon] = useState(null);
@@ -96,11 +140,25 @@ const HackathonsPage = () => {
     setSearchTerm(e.target.value);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const res = await axios.get("http://localhost:8080/api/v1/hackathons/getHackathons");
+            setData(res.data);
+            console.log(res.data.data);
+            hackathonsData.push(...res.data.data);
+            console.log(hackathonsData);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+    fetchData();
+  }, []);
+
   const handleSearchClick = () => {
     const filteredData = hackathonsData.filter((hackathon) =>
-      hackathon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      hackathon.organizer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      hackathon.type.toLowerCase().includes(searchTerm.toLowerCase())
+      hackathon.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      hackathon.host.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredHackathons(filteredData);
   };
@@ -184,9 +242,6 @@ const HackathonsPage = () => {
                 variant="outlined"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') handleSearchClick();
-                }}
                 style={{
                   backgroundColor: 'white',
                   flexGrow: 1,
@@ -351,7 +406,7 @@ const HackathonsPage = () => {
             </Box>
             {/* cards */}
           <Grid container spacing={4} justifyContent="center" style={{ marginRight: '20px' }}> {/* Adjusted margin to move cards */}
-            {filteredHackathons.map((hackathon, index) => (
+            {hackathonsData.map((hackathon, index) => (
               <Grid item xs={12} md={8} key={index}>
                 <Card
                   style={{
@@ -366,7 +421,7 @@ const HackathonsPage = () => {
                   <CardMedia
                     component="img"
                     alt="Hackathon Image"
-                    image={hackathon.image}
+                    image="https://img.freepik.com/free-vector/hackathon-doodle-hand-drawing-team-programmers-web-developers-managers-graphic-designers-deve_88138-1348.jpg"
                     style={{
                       width: '40%',
                       height: 'auto', 
@@ -376,37 +431,44 @@ const HackathonsPage = () => {
                     }}
                   />
                   <CardContent style={{ flex: 1 }}>
-                    <Typography variant="h5" gutterBottom style={{ color : theme.color, }}>{hackathon.title}</Typography>
+                    <Typography variant="h5" gutterBottom style={{ color : theme.color, }}>{hackathon.displayName}</Typography>
                     <Typography variant="body2" color="textSecondary" style={{ color : theme.color, }}>
-                      Organized by {hackathon.organizer}
+                      Organized by {hackathon.host}
                     </Typography>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <School style={{ marginRight: '8px', color: '#ffc107' }} />
-                        <Typography variant="body2" color="textSecondary" style={{color : theme.color, }}>
-                          Eligibility: {hackathon.eligibility}
+                        <CalendarToday style={{ marginRight: '8px', color: '#ffc107' }} />
+                        <Typography variant="body2" color="textSecondary" style={{ color : theme.color,}}>
+                          Registration Start Date : {hackathon.RegistrationDeadline.split("T")[0]}
                         </Typography>
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <CalendarToday style={{ marginRight: '8px', color: '#ffc107' }} />
                         <Typography variant="body2" color="textSecondary" style={{ color : theme.color,}}>
-                          Date: {hackathon.date}
+                          Start Date : {hackathon.startDate.split("T")[0]}
+                        </Typography>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <CalendarToday style={{ marginRight: '8px', color: '#ffc107' }} />
+                        <Typography variant="body2" color="textSecondary" style={{ color : theme.color,}}>
+                          End Date : {hackathon.endDate.split("T")[0]}
                         </Typography>
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Group style={{ marginRight: '8px', color: '#ffc107' }} />
                         <Typography variant="body2" color="textSecondary" style={{ color : theme.color, }}>
-                          Participants: {hackathon.participants}
+                          Participants: {hackathon.limit}
                         </Typography>
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <EmojiEvents style={{ marginRight: '8px', color: '#ffc107' }} />
                         <Typography variant="body2" color="textSecondary" style={{ color : theme.color, }}>
-                          Prizes: {hackathon.prizes}
+                          Prizes: {hackathon.prizePool}
                         </Typography>
                       </div>
                     </div>
@@ -435,16 +497,13 @@ const HackathonsPage = () => {
         </div>
           {selectedHackathon && (
             <Dialog open={Boolean(selectedHackathon)} onClose={handleCloseDialog}>
-              <DialogTitle>{selectedHackathon.title}</DialogTitle>
+              <DialogTitle>{selectedHackathon.displayName}</DialogTitle>
               <DialogContent>
                 <Typography variant="body1" style={{ color: 'black' }}>
-                  {selectedHackathon.details}
+                  {selectedHackathon.description}
                 </Typography>
                 <Typography variant="body2" style={{ color: 'black', marginTop: '10px' }}>
                   Location: {selectedHackathon.location}
-                </Typography>
-                <Typography variant="body2" style={{ color: 'black' }}>
-                  Duration: {selectedHackathon.duration}
                 </Typography>
               </DialogContent>
             </Dialog>

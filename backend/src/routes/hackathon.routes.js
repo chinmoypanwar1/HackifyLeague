@@ -8,6 +8,6 @@ router.post("/createHackathon", createHackathon);
 router.get("/getHackathons", getHackathons)
 router.get("/getHackathon/:hackathonId", getHackathonById)
 router.patch("/updateHackathon/:hackathonId",verifyJWT, updateHackathonDetails)
-route.get("/searchHackathon", verifyJWT, searchHackathon)
+router.get("/searchHackathon", verifyJWT, searchHackathon)
 
 export default router;
